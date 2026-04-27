@@ -1,0 +1,3 @@
+[server]
+# Resolve the "Paths don't have the same drive" error on Windows
+fileWatcherType = "poll"

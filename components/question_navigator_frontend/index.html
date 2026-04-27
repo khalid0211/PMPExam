@@ -1,0 +1,147 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Question Navigator</title>
+  <script src="https://unpkg.com/streamlit-component-lib@2.0.0/dist/index.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0.5rem; }
+    .title { font-size: 1rem; line-height: 1.45; white-space: pre-wrap; overflow-wrap: anywhere; margin-bottom: 0.4rem; }
+    .meta { color: #666; font-size: 0.85rem; margin-bottom: 0.5rem; }
+    .choice { display: block; margin: 0.35rem 0; font-size: 0.93rem; line-height: 1.35; white-space: normal; overflow-wrap: anywhere; }
+    .controls { display: flex; gap: 0.5rem; margin-top: 0.7rem; }
+    button { padding: 0.35rem 0.6rem; border-radius: 6px; border: 1px solid #bbb; background: #f8f9fa; cursor: pointer; }
+    button:disabled { opacity: 0.45; cursor: not-allowed; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script>
+    let questions = [];
+    let answers = {};
+    let idx = 0;
+    let navMovesSinceSync = 0;
+    let syncEvery = 10;
+    let remainingSeconds = 0;
+    let timerHandle = null;
+
+    const root = document.getElementById("root");
+
+    function emit(action) {
+      Streamlit.setComponentValue({
+        action,
+        current_index: idx,
+        answers,
+      });
+    }
+
+    function render() {
+      if (!questions.length) {
+        root.innerHTML = "<div>No questions available.</div>";
+        Streamlit.setFrameHeight(80);
+        return;
+      }
+
+      const q = questions[idx];
+      const selected = answers[q.q_id] || "";
+      const opts = q.choices || {};
+      const hh = String(Math.floor(remainingSeconds / 3600)).padStart(2, "0");
+      const mm = String(Math.floor((remainingSeconds % 3600) / 60)).padStart(2, "0");
+      const ss = String(remainingSeconds % 60).padStart(2, "0");
+
+      root.innerHTML = `
+        <div class="meta"><strong>Time Remaining:</strong> ${hh}:${mm}:${ss}</div>
+        <div class="title">${q.text || ""}</div>
+        <div class="meta">Domain: ${q.domain || ""} | Question ${idx + 1} of ${questions.length}</div>
+        <label class="choice"><input type="radio" name="ans" value="a" ${selected === "a" ? "checked" : ""}/> A) ${opts.a || ""}</label>
+        <label class="choice"><input type="radio" name="ans" value="b" ${selected === "b" ? "checked" : ""}/> B) ${opts.b || ""}</label>
+        <label class="choice"><input type="radio" name="ans" value="c" ${selected === "c" ? "checked" : ""}/> C) ${opts.c || ""}</label>
+        <label class="choice"><input type="radio" name="ans" value="d" ${selected === "d" ? "checked" : ""}/> D) ${opts.d || ""}</label>
+        <div class="controls">
+          <button id="prev" ${idx === 0 ? "disabled" : ""}>Previous</button>
+          <button id="next" ${idx === questions.length - 1 ? "disabled" : ""}>Next</button>
+          <button id="sync">Sync Now</button>
+        </div>
+      `;
+
+      root.querySelectorAll("input[name='ans']").forEach((el) => {
+        el.addEventListener("change", (e) => {
+          answers[q.q_id] = e.target.value;
+        });
+      });
+
+      const prev = root.querySelector("#prev");
+      const next = root.querySelector("#next");
+      const sync = root.querySelector("#sync");
+
+      prev.addEventListener("click", () => {
+        if (idx > 0) {
+          idx -= 1;
+          navMovesSinceSync += 1;
+          render();
+          if (navMovesSinceSync >= syncEvery) {
+            navMovesSinceSync = 0;
+            emit("autosave");
+          }
+        }
+      });
+
+      next.addEventListener("click", () => {
+        if (idx < questions.length - 1) {
+          idx += 1;
+          navMovesSinceSync += 1;
+          render();
+          if (navMovesSinceSync >= syncEvery) {
+            navMovesSinceSync = 0;
+            emit("autosave");
+          }
+        }
+      });
+
+      sync.addEventListener("click", () => {
+        navMovesSinceSync = 0;
+        emit("sync_now");
+      });
+
+      Streamlit.setFrameHeight(document.body.scrollHeight + 10);
+    }
+
+    function startLocalTimer() {
+      if (timerHandle) {
+        clearInterval(timerHandle);
+      }
+      timerHandle = setInterval(() => {
+        if (remainingSeconds > 0) {
+          remainingSeconds -= 1;
+          const timerRows = root.querySelectorAll(".meta");
+          if (timerRows.length) {
+            const hh = String(Math.floor(remainingSeconds / 3600)).padStart(2, "0");
+            const mm = String(Math.floor((remainingSeconds % 3600) / 60)).padStart(2, "0");
+            const ss = String(remainingSeconds % 60).padStart(2, "0");
+            timerRows[0].innerHTML = `<strong>Time Remaining:</strong> ${hh}:${mm}:${ss}`;
+          }
+          if (remainingSeconds === 0) {
+            emit("time_expired");
+          }
+        }
+      }, 1000);
+    }
+
+    function onRender(event) {
+      const args = event.detail.args || {};
+      questions = Array.isArray(args.questions) ? args.questions : [];
+      answers = args.answers || {};
+      syncEvery = Number(args.sync_every || 10);
+      remainingSeconds = Math.max(0, Number(args.remaining_seconds || 0));
+      idx = Math.max(0, Math.min(Number(args.current_index || 0), Math.max(questions.length - 1, 0)));
+      render();
+      startLocalTimer();
+    }
+
+    Streamlit.events.addEventListener(Streamlit.RENDER_EVENT, onRender);
+    Streamlit.setComponentReady();
+    Streamlit.setFrameHeight(120);
+  </script>
+</body>
+</html>

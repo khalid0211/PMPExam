@@ -1,0 +1,50 @@
+from firebase_config import get_db
+from config import UserRole
+from google.cloud.firestore_v1.base_query import FieldFilter
+
+class UserService:
+    def __init__(self):
+        self.db = get_db()
+        self.collection = self.db.collection("users") if self.db else None
+
+    def get_all_students(self) -> list:
+        if not self.collection:
+            return []
+        docs = self.collection.where(filter=FieldFilter("role", "==", UserRole.STUDENT)).stream()
+        return [doc.to_dict() for doc in docs]
+
+    def toggle_user_access(self, uid: str, enabled: bool):
+        if self.collection:
+            self.collection.document(uid).update({"is_enabled": enabled})
+
+    def reset_attempts(self, uid: str):
+        if self.collection:
+            self.collection.document(uid).update({"current_tries": 0})
+
+    def update_max_tries(self, uid: str, max_tries: int):
+        if self.collection:
+            self.collection.document(uid).update({"max_tries": max_tries})
+
+    def increment_tries(self, uid: str):
+        if self.collection:
+            from google.cloud.firestore_v1 import Increment
+            self.collection.document(uid).update({"current_tries": Increment(1)})
+
+    def decrement_tries(self, uid: str):
+        if self.collection:
+            from google.cloud.firestore_v1 import Increment
+            # Ensure it doesn't go below 0
+            user_doc = self.collection.document(uid).get()
+            if user_doc.exists and user_doc.to_dict().get("current_tries", 0) > 0:
+                self.collection.document(uid).update({"current_tries": Increment(-1)})
+
+    def delete_all_students(self) -> int:
+        """Delete all student users. Returns count of deleted users."""
+        if not self.collection:
+            return 0
+        deleted = 0
+        docs = self.collection.where(filter=FieldFilter("role", "==", UserRole.STUDENT)).stream()
+        for doc in docs:
+            doc.reference.delete()
+            deleted += 1
+        return deleted
