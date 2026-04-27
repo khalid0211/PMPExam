@@ -2,6 +2,33 @@ import streamlit as st
 from firebase_config import get_db
 from config import ADMIN_EMAIL, SessionKeys, UserRole
 
+def _get_streamlit_user_info():
+    """Support both legacy and current Streamlit auth APIs."""
+    # Newer API
+    user = getattr(st, "user", None)
+    if user is not None:
+        try:
+            if user.is_logged_in:
+                return {"is_logged_in": True, "email": user.email, "id": user.id}
+        except AttributeError:
+            pass
+
+    # Legacy API
+    exp_user = getattr(st, "experimental_user", None)
+    if exp_user is not None:
+        try:
+            if exp_user.get("is_logged_in", False):
+                return {"is_logged_in": True, "email": exp_user.email, "id": exp_user.id}
+        except Exception:
+            try:
+                if getattr(exp_user, "is_logged_in", False):
+                    return {"is_logged_in": True, "email": exp_user.email, "id": exp_user.id}
+            except Exception:
+                pass
+
+    return {"is_logged_in": False}
+
+
 def handle_login():
     """Handle Google OAuth login flow with local development support."""
     # check if running locally or on Streamlit Cloud
@@ -20,7 +47,8 @@ def handle_login():
         return user
 
     # Production Streamlit Cloud Auth
-    if not st.experimental_user.get("is_logged_in", False):
+    user_info = _get_streamlit_user_info()
+    if not user_info.get("is_logged_in", False):
         st.title("PMP Exam Simulator")
         st.write("Please sign in to continue.")
         if st.button("Sign in with Google", type="primary"):
@@ -30,8 +58,7 @@ def handle_login():
                 st.error("Login is only available on Streamlit Cloud. To test locally, set is_local = true in secrets.toml")
         return None
 
-    user_info = st.experimental_user
-    user = get_or_create_user(user_info.email, user_info.id)
+    user = get_or_create_user(user_info["email"], user_info["id"])
 
     if not user.get("is_enabled", False):
         st.error("Your account is disabled. Contact administrator.")
