@@ -2,29 +2,45 @@ import streamlit as st
 from firebase_config import get_db
 from config import ADMIN_EMAIL, SessionKeys, UserRole
 
+def _read_user_field(user_obj, field, default=None):
+    """Read auth fields from both object-style and dict-style user payloads."""
+    try:
+        if isinstance(user_obj, dict):
+            return user_obj.get(field, default)
+    except Exception:
+        pass
+    try:
+        return getattr(user_obj, field)
+    except Exception:
+        pass
+    try:
+        return user_obj[field]
+    except Exception:
+        return default
+
+
 def _get_streamlit_user_info():
     """Support both legacy and current Streamlit auth APIs."""
     # Newer API
     user = getattr(st, "user", None)
     if user is not None:
-        try:
-            if user.is_logged_in:
-                return {"is_logged_in": True, "email": user.email, "id": user.id}
-        except AttributeError:
-            pass
+        is_logged_in = bool(_read_user_field(user, "is_logged_in", False))
+        if is_logged_in:
+            email = _read_user_field(user, "email")
+            # Different runtimes may expose id as "id" or "sub"
+            uid = _read_user_field(user, "id") or _read_user_field(user, "sub")
+            if email:
+                return {"is_logged_in": True, "email": email, "id": uid or email}
 
     # Legacy API
     exp_user = getattr(st, "experimental_user", None)
     if exp_user is not None:
-        try:
-            if exp_user.get("is_logged_in", False):
-                return {"is_logged_in": True, "email": exp_user.email, "id": exp_user.id}
-        except Exception:
-            try:
-                if getattr(exp_user, "is_logged_in", False):
-                    return {"is_logged_in": True, "email": exp_user.email, "id": exp_user.id}
-            except Exception:
-                pass
+        is_logged_in = bool(_read_user_field(exp_user, "is_logged_in", False))
+        if is_logged_in:
+            email = _read_user_field(exp_user, "email")
+            uid = _read_user_field(exp_user, "id") or _read_user_field(exp_user, "sub")
+            if email:
+                return {"is_logged_in": True, "email": email, "id": uid or email}
 
     return {"is_logged_in": False}
 
