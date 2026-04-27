@@ -29,6 +29,19 @@ def _get_streamlit_user_info():
     return {"is_logged_in": False}
 
 
+def _trigger_streamlit_login():
+    """Handle Streamlit login API differences across versions."""
+    login_fn = getattr(st, "login", None)
+    if login_fn is None:
+        raise RuntimeError("Streamlit login API is unavailable in this runtime.")
+    try:
+        # Newer versions typically use parameterless login().
+        login_fn()
+    except TypeError:
+        # Older experimental auth variant expects provider id.
+        login_fn("google")
+
+
 def handle_login():
     """Handle Google OAuth login flow with local development support."""
     # check if running locally or on Streamlit Cloud
@@ -53,9 +66,12 @@ def handle_login():
         st.write("Please sign in to continue.")
         if st.button("Sign in with Google", type="primary"):
             try:
-                st.login("google")
+                _trigger_streamlit_login()
             except Exception as e:
-                st.error("Login is only available on Streamlit Cloud. To test locally, set is_local = true in secrets.toml")
+                st.error(
+                    "Google login failed. Verify Streamlit Cloud authentication is enabled and app secrets are correct."
+                )
+                st.caption(f"Auth error details: {e}")
         return None
 
     user = get_or_create_user(user_info["email"], user_info["id"])
