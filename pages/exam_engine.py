@@ -99,20 +99,7 @@ def render_exam_engine():
         st.subheader("Exam Status")
         st.write(f"Answered: {len(answers)} / {len(questions)}")
         st.write(f"Marked for Review: {len(st.session_state[SessionKeys.MARKED_FOR_REVIEW])}")
-        st.caption("Use Pause & Save to leave now and resume this exam later.")
-        
         st.divider()
-        if st.button("Pause & Save", width="stretch"):
-            _save_pending_answers(exam_service, exam_id, answers, force=True)
-            remaining = pause_timer()
-            exam_service.update_time_remaining(exam_id, remaining)
-            # Clear local exam state
-            for key in [SessionKeys.QUESTIONS, SessionKeys.ANSWERS, SessionKeys.CURRENT_QUESTION_INDEX,
-                        SessionKeys.TIMER_START, SessionKeys.TIME_REMAINING, SessionKeys.EXAM_DATA, SessionKeys.PENDING_SAVE,
-                        LAST_ANSWER_SAVE_TS, NAV_CHANGES_SINCE_SAVE, DIRTY_ANSWER_IDS]:
-                if key in st.session_state: del st.session_state[key]
-            st.session_state["student_view"] = "main"
-            st.rerun()
 
     # Main Question UI (stable fallback: native Streamlit widgets)
     question = questions[curr_idx]
@@ -193,6 +180,17 @@ def render_exam_engine():
     with b_col4:
         if st.button("Finish & Submit", type="primary"):
             st.session_state["show_submit_confirm"] = True
+        if st.button("Pause & Save", type="primary"):
+            _save_pending_answers(exam_service, exam_id, answers, force=True)
+            remaining = pause_timer()
+            exam_service.update_time_remaining(exam_id, remaining)
+            # Clear local exam state
+            for key in [SessionKeys.QUESTIONS, SessionKeys.ANSWERS, SessionKeys.CURRENT_QUESTION_INDEX,
+                        SessionKeys.TIMER_START, SessionKeys.TIME_REMAINING, SessionKeys.EXAM_DATA, SessionKeys.PENDING_SAVE,
+                        LAST_ANSWER_SAVE_TS, NAV_CHANGES_SINCE_SAVE, DIRTY_ANSWER_IDS]:
+                if key in st.session_state: del st.session_state[key]
+            st.session_state["student_view"] = "main"
+            st.rerun()
 
     if st.session_state.get("show_submit_confirm"):
         st.warning("Are you sure you want to submit? You cannot change your answers after this.")
