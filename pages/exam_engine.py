@@ -99,9 +99,10 @@ def render_exam_engine():
         st.subheader("Exam Status")
         st.write(f"Answered: {len(answers)} / {len(questions)}")
         st.write(f"Marked for Review: {len(st.session_state[SessionKeys.MARKED_FOR_REVIEW])}")
+        st.caption("Use Pause & Save to leave now and resume this exam later.")
         
         st.divider()
-        if st.button("Save & Exit", use_container_width=True):
+        if st.button("Pause & Save", use_container_width=True):
             _save_pending_answers(exam_service, exam_id, answers, force=True)
             remaining = pause_timer()
             exam_service.update_time_remaining(exam_id, remaining)
