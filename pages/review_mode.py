@@ -75,7 +75,7 @@ def render_review_mode():
         
         # Use a simpler header to avoid truncation confusion, show full text inside
         with st.expander(f"Question {i+1}: {'✅ Correct' if is_correct else '❌ Incorrect'}"):
-            st.write(f"### {question['text']}")
+            st.write(f"### Question: {question['text']}")
             st.caption(f"Domain: {question['domain']}")
             
             for key in ["a", "b", "c", "d"]:

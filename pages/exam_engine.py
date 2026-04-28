@@ -136,7 +136,7 @@ def render_exam_engine():
         """,
         unsafe_allow_html=True
     )
-    st.markdown(f"<div class='question-text'>{question['text']}</div>", unsafe_allow_html=True)
+    st.markdown(f"<div class='question-text'><strong>Question:</strong> {question['text']}</div>", unsafe_allow_html=True)
     st.caption(f"Domain: {question['domain']}")
 
     options = question["choices"]

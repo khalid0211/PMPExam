@@ -69,7 +69,10 @@ def render_practice_mode():
         """,
         unsafe_allow_html=True
     )
-    st.markdown(f"<div class='practice-question-text'>{question['text']}</div>", unsafe_allow_html=True)
+    st.markdown(
+        f"<div class='practice-question-text'><strong>Question:</strong> {question['text']}</div>",
+        unsafe_allow_html=True
+    )
     st.caption(f"Domain: {question['domain']}")
 
     options = question["choices"]
