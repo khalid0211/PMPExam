@@ -107,7 +107,7 @@ def handle_login():
     user_info = _get_streamlit_user_info()
     if not user_info.get("is_logged_in", False):
         st.title("PMP Exam Simulator")
-        st.image("PMPExamBanner.jpg", use_container_width=True)
+        st.image("PMPExamBanner.jpg", width="stretch")
         st.write("Please sign in to continue.")
         if st.button("Sign in with Google", type="primary"):
             try:

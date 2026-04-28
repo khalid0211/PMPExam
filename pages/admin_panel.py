@@ -151,7 +151,7 @@ def render_admin_panel():
                     "percent": round((exam.get("total_score", 0) / total_questions) * 100, 1) if total_questions else 0.0,
                     "started_at": start_time.strftime("%Y-%m-%d %H:%M") if start_time else "",
                 })
-            st.dataframe(pd.DataFrame(rows), use_container_width=True)
+            st.dataframe(pd.DataFrame(rows), width="stretch")
 
     # Test Mode Reset Section
     if LOCAL_TEST_MODE:
