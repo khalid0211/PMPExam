@@ -1,7 +1,7 @@
 import streamlit as st
 
 # App Constants
-EXAM_DURATION_MINUTES = 230  # 4 hours PMP style
+EXAM_DURATION_MINUTES = 240  # 4 hours PMP style
 EXAM_DURATION_SECONDS = EXAM_DURATION_MINUTES * 60
 
 # Safe secrets access
