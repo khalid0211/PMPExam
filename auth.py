@@ -29,8 +29,20 @@ def _get_streamlit_user_info():
             email = _read_user_field(user, "email")
             # Different runtimes may expose id as "id" or "sub"
             uid = _read_user_field(user, "id") or _read_user_field(user, "sub")
+            name = _read_user_field(user, "name") or _read_user_field(user, "given_name")
+            picture = (
+                _read_user_field(user, "picture")
+                or _read_user_field(user, "picture_url")
+                or _read_user_field(user, "avatar_url")
+            )
             if email:
-                return {"is_logged_in": True, "email": email, "id": uid or email}
+                return {
+                    "is_logged_in": True,
+                    "email": email,
+                    "id": uid or email,
+                    "name": name,
+                    "picture": picture
+                }
 
     # Legacy API
     exp_user = getattr(st, "experimental_user", None)
@@ -39,8 +51,20 @@ def _get_streamlit_user_info():
         if is_logged_in:
             email = _read_user_field(exp_user, "email")
             uid = _read_user_field(exp_user, "id") or _read_user_field(exp_user, "sub")
+            name = _read_user_field(exp_user, "name") or _read_user_field(exp_user, "given_name")
+            picture = (
+                _read_user_field(exp_user, "picture")
+                or _read_user_field(exp_user, "picture_url")
+                or _read_user_field(exp_user, "avatar_url")
+            )
             if email:
-                return {"is_logged_in": True, "email": email, "id": uid or email}
+                return {
+                    "is_logged_in": True,
+                    "email": email,
+                    "id": uid or email,
+                    "name": name,
+                    "picture": picture
+                }
 
     return {"is_logged_in": False}
 
@@ -69,9 +93,13 @@ def handle_login():
         mock_user = {
             "email": ADMIN_EMAIL,
             "id": "local_dev_user_123",
+            "name": ADMIN_EMAIL.split("@")[0],
+            "picture": None,
             "is_logged_in": True
         }
         user = get_or_create_user(mock_user["email"], mock_user["id"])
+        user["name"] = mock_user["name"]
+        user["picture"] = mock_user["picture"]
         st.session_state[SessionKeys.USER] = user
         return user
 
@@ -79,6 +107,7 @@ def handle_login():
     user_info = _get_streamlit_user_info()
     if not user_info.get("is_logged_in", False):
         st.title("PMP Exam Simulator")
+        st.image("PMPExamBanner.jpg", use_container_width=True)
         st.write("Please sign in to continue.")
         if st.button("Sign in with Google", type="primary"):
             try:
@@ -91,6 +120,8 @@ def handle_login():
         return None
 
     user = get_or_create_user(user_info["email"], user_info["id"])
+    user["name"] = user_info.get("name") or user["email"].split("@")[0]
+    user["picture"] = user_info.get("picture")
 
     if not user.get("is_enabled", False):
         st.error("Your account is disabled. Contact administrator.")

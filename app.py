@@ -10,6 +10,18 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+# Hide Streamlit's default multipage list. Navigation is role-based inside this app.
+st.markdown(
+    """
+    <style>
+    [data-testid="stSidebarNav"] {
+        display: none;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 def _get_current_user():
     """Return cached user from session to avoid repeated auth/database calls."""
     cached_user = st.session_state.get(SessionKeys.USER)
@@ -25,8 +37,13 @@ def main():
 
     # Sidebar Navigation
     with st.sidebar:
-        st.title(f"Welcome, {user['email'].split('@')[0]}")
-        st.write(f"Role: {user['role'].capitalize()}")
+        display_name = user.get("name") or user["email"].split("@")[0]
+        display_role = user.get("role", UserRole.STUDENT).capitalize()
+        if user.get("picture"):
+            st.image(user["picture"], width=88)
+        st.title(display_name)
+        st.caption(user["email"])
+        st.write(f"Role: {display_role}")
         
         if st.button("Logout", key="logout_btn"):
             logout()
@@ -36,8 +53,9 @@ def main():
         
         # Navigation logic
         if user['role'] == UserRole.ADMIN:
-            page = st.radio("Navigation", ["Admin Panel", "Student Dashboard"])
+            page = st.radio("Navigation", ["Admin Panel", "Student Dashboard"], key="main_nav")
         else:
+            st.subheader("Student Dashboard")
             page = "Student Dashboard"
 
     # Routing
