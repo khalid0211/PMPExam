@@ -110,12 +110,21 @@ def _trigger_streamlit_login():
     login_fn = getattr(st, "login", None)
     if login_fn is None:
         raise RuntimeError("Streamlit login API is unavailable in this runtime.")
+    auth_cfg = st.secrets.get("auth", {})
+    has_google_provider = bool(auth_cfg.get("google", {}).get("client_id"))
     try:
-        # Newer versions typically use parameterless login().
-        login_fn()
+        # If [auth.google] is configured, explicitly target that provider.
+        if has_google_provider:
+            login_fn("google")
+        else:
+            # Flat/default provider configuration.
+            login_fn()
     except TypeError:
-        # Older experimental auth variant expects provider id.
-        login_fn("google")
+        # Backward compatibility across Streamlit auth API signatures.
+        if has_google_provider:
+            login_fn()
+        else:
+            login_fn("google")
 
 def _render_auth_debug_panel():
     """Render inline Streamlit auth diagnostics on the login screen."""
