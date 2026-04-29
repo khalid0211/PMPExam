@@ -1,174 +1,35 @@
 import streamlit as st
-import traceback
+from streamlit_google_auth import Authenticate
 from firebase_config import get_db
 from config import ADMIN_EMAIL, SessionKeys, UserRole
 
-def _run_firebase_health_check():
-    """Run lightweight checks for Firebase configuration and Firestore access."""
-    required_keys = [
-        "type",
-        "project_id",
-        "private_key_id",
-        "private_key",
-        "client_email",
-        "client_id",
-        "auth_uri",
-        "token_uri",
-        "auth_provider_x509_cert_url",
-        "client_x509_cert_url",
-    ]
-    firebase_secrets = st.secrets.get("firebase", {})
-    missing = [k for k in required_keys if not firebase_secrets.get(k)]
-    if missing:
-        st.error("Firebase secrets are missing required keys.")
-        st.caption(f"Missing keys: {', '.join(missing)}")
-        return
 
-    db = get_db()
-    if not db:
-        st.error("Firebase initialization failed.")
-        return
+def _get_authenticator():
+    """Create and return the Google authenticator instance."""
+    # Get credentials from secrets
+    client_id = st.secrets["auth"]["client_id"]
+    client_secret = st.secrets["auth"]["client_secret"]
+    redirect_uri = st.secrets["auth"]["redirect_uri"].replace("/oauth2callback", "")
+    cookie_secret = st.secrets["auth"]["cookie_secret"]
 
-    try:
-        # Read-only probe to validate Firestore connectivity and permissions.
-        db.collection("users").limit(1).get()
-        st.success("Firebase and Firestore connectivity look healthy.")
-        st.caption("Initialization succeeded and a Firestore read completed.")
-    except Exception as e:
-        st.error("Firestore read check failed.")
-        st.caption(f"Firestore error details: {e}")
-
-def _read_user_field(user_obj, field, default=None):
-    """Read auth fields from both object-style and dict-style user payloads."""
-    try:
-        if isinstance(user_obj, dict):
-            return user_obj.get(field, default)
-    except Exception:
-        pass
-    try:
-        return getattr(user_obj, field)
-    except Exception:
-        pass
-    try:
-        return user_obj[field]
-    except Exception:
-        return default
-
-
-def _get_streamlit_user_info():
-    """Support both legacy and current Streamlit auth APIs."""
-    # Newer API
-    user = getattr(st, "user", None)
-    if user is not None:
-        is_logged_in = bool(_read_user_field(user, "is_logged_in", False))
-        if is_logged_in:
-            email = _read_user_field(user, "email")
-            # Different runtimes may expose id as "id" or "sub"
-            uid = _read_user_field(user, "id") or _read_user_field(user, "sub")
-            name = _read_user_field(user, "name") or _read_user_field(user, "given_name")
-            picture = (
-                _read_user_field(user, "picture")
-                or _read_user_field(user, "picture_url")
-                or _read_user_field(user, "avatar_url")
-            )
-            if email:
-                return {
-                    "is_logged_in": True,
-                    "email": email,
-                    "id": uid or email,
-                    "name": name,
-                    "picture": picture
-                }
-
-    # Legacy API
-    exp_user = getattr(st, "experimental_user", None)
-    if exp_user is not None:
-        is_logged_in = bool(_read_user_field(exp_user, "is_logged_in", False))
-        if is_logged_in:
-            email = _read_user_field(exp_user, "email")
-            uid = _read_user_field(exp_user, "id") or _read_user_field(exp_user, "sub")
-            name = _read_user_field(exp_user, "name") or _read_user_field(exp_user, "given_name")
-            picture = (
-                _read_user_field(exp_user, "picture")
-                or _read_user_field(exp_user, "picture_url")
-                or _read_user_field(exp_user, "avatar_url")
-            )
-            if email:
-                return {
-                    "is_logged_in": True,
-                    "email": email,
-                    "id": uid or email,
-                    "name": name,
-                    "picture": picture
-                }
-
-    return {"is_logged_in": False}
-
-
-def _trigger_streamlit_login():
-    """Handle Streamlit login API differences across versions."""
-    login_fn = getattr(st, "login", None)
-    if login_fn is None:
-        raise RuntimeError("Streamlit login API is unavailable in this runtime.")
-    # Use simple login() call - works with flat [auth] config (single provider)
-    login_fn()
-
-def _render_auth_debug_panel():
-    """Render inline Streamlit auth diagnostics on the login screen."""
-    user_obj = getattr(st, "user", None)
-    auth_cfg = st.secrets.get("auth", {})
-    st.write(
-        {
-            "streamlit_version": getattr(st, "__version__", "unknown"),
-            "has_login": callable(getattr(st, "login", None)),
-            "has_logout": callable(getattr(st, "logout", None)),
-            "has_user_api": user_obj is not None,
-            "auth_secrets_present": "auth" in st.secrets,
-            "has_client_id": bool(auth_cfg.get("client_id")),
-            "has_client_secret": bool(auth_cfg.get("client_secret")),
-            "has_redirect_uri": bool(auth_cfg.get("redirect_uri")),
-            "has_cookie_secret": bool(auth_cfg.get("cookie_secret")),
-            "user_is_logged_in": bool(_read_user_field(user_obj, "is_logged_in", False)) if user_obj else False,
-            "user_email": _read_user_field(user_obj, "email") if user_obj else None,
+    # Build credentials dict for streamlit-google-auth
+    credentials = {
+        "web": {
+            "client_id": client_id,
+            "client_secret": client_secret,
+            "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+            "token_uri": "https://oauth2.googleapis.com/token",
+            "redirect_uris": [redirect_uri]
         }
+    }
+
+    return Authenticate(
+        secret_credentials_path=credentials,
+        cookie_name="pmp_exam_auth",
+        cookie_key=cookie_secret,
+        redirect_uri=redirect_uri,
     )
 
-    c1, c2 = st.columns(2)
-    with c1:
-        if st.button("Debug: Trigger st.login()", key="debug_login_btn"):
-            try:
-                _trigger_streamlit_login()
-            except Exception as e:
-                st.error("Debug login failed.")
-                st.code(f"{type(e).__name__}: {e}")
-                st.code(traceback.format_exc())
-    with c2:
-        if st.button("Debug: Trigger st.logout()", key="debug_logout_btn"):
-            try:
-                logout_fn = getattr(st, "logout", None)
-                if logout_fn is None:
-                    st.error("st.logout() is unavailable in this runtime.")
-                else:
-                    logout_fn()
-            except Exception as e:
-                st.error("Debug logout failed.")
-                st.code(f"{type(e).__name__}: {e}")
-                st.code(traceback.format_exc())
-
-def _validate_auth_secrets_shape():
-    """Return a human-readable validation message for auth secrets."""
-    auth = st.secrets.get("auth", {})
-    has_credentials = bool(auth.get("client_id")) and bool(auth.get("client_secret"))
-    has_common = bool(auth.get("redirect_uri")) and bool(auth.get("cookie_secret"))
-    has_metadata = bool(auth.get("server_metadata_url"))
-
-    if not has_common:
-        return "Missing required [auth] keys: redirect_uri and/or cookie_secret."
-    if not has_credentials:
-        return "Missing [auth] credentials: client_id and/or client_secret."
-    if not has_metadata:
-        return "Missing [auth] server_metadata_url."
-    return "Auth secrets configured correctly (flat format)."
 
 def _normalize_user_payload(user: dict, email: str, uid: str) -> dict:
     """Backfill required fields for older/incomplete user records."""
@@ -185,12 +46,11 @@ def _normalize_user_payload(user: dict, email: str, uid: str) -> dict:
 
 def handle_login():
     """Handle Google OAuth login flow with local development support."""
-    # check if running locally or on Streamlit Cloud
+    # Check if running locally
     is_local = st.secrets.get("app", {}).get("is_local", False)
 
     if is_local:
         st.sidebar.info("Running in Local Dev Mode")
-        # Mock user for local testing
         mock_user = {
             "email": ADMIN_EMAIL,
             "id": "local_dev_user_123",
@@ -204,87 +64,99 @@ def handle_login():
         st.session_state[SessionKeys.USER] = user
         return user
 
-    # Production Streamlit Cloud Auth
-    user_info = _get_streamlit_user_info()
-    if not user_info.get("is_logged_in", False):
-        st.title("PMP Exam Simulator")
-        st.image("PMPExamBanner.jpg", use_column_width=True)
-        st.write("Please sign in to continue.")
-        if st.button("Open Auth Debug Panel", key="open_auth_debug_btn"):
-            st.session_state["show_auth_debug"] = not st.session_state.get("show_auth_debug", False)
-        if st.session_state.get("show_auth_debug", False):
-            with st.expander("Auth Debug Panel", expanded=True):
-                _render_auth_debug_panel()
-        with st.expander("Troubleshoot Firebase / Login", expanded=False):
-            st.caption("Use this if Google sign-in returns an internal server error.")
-            if st.button("Run Firebase Health Check", key="firebase_health_btn"):
-                _run_firebase_health_check()
-        if st.button("Sign in with Google", type="primary"):
-            try:
-                _trigger_streamlit_login()
-            except Exception as e:
-                st.error(
-                    "Google login failed. Verify Streamlit Cloud authentication is enabled and app secrets are correct."
-                )
-                st.warning(_validate_auth_secrets_shape())
-                st.code(f"{type(e).__name__}: {e}")
-                st.caption(f"Auth error details: {e}")
-                st.code(traceback.format_exc())
+    # Production: Use streamlit-google-auth
+    try:
+        authenticator = _get_authenticator()
+        authenticator.check_authentification()
+    except Exception as e:
+        st.error(f"Authentication initialization failed: {e}")
         return None
+
+    # Check if user is connected
+    if st.session_state.get("connected", False):
+        user_info = st.session_state.get("user_info", {})
+        email = user_info.get("email")
+        uid = user_info.get("id") or user_info.get("sub") or email
+        name = user_info.get("name")
+        picture = user_info.get("picture")
+
+        if not email:
+            st.error("Could not retrieve email from Google. Please try again.")
+            if st.button("Retry Login"):
+                authenticator.logout()
+                st.rerun()
+            return None
+
+        try:
+            user = get_or_create_user(email, uid)
+        except Exception as e:
+            st.error(f"Sign-in succeeded, but user profile initialization failed: {e}")
+            return None
+
+        if not user:
+            st.error("Database connection could not be initialized. Please try again.")
+            return None
+
+        user["name"] = name or user.get("email", email).split("@")[0]
+        user["picture"] = picture
+
+        if not user.get("is_enabled", False):
+            st.error("Your account is disabled. Contact administrator.")
+            if st.button("Logout"):
+                authenticator.logout()
+                st.rerun()
+            return None
+
+        st.session_state[SessionKeys.USER] = user
+        return user
+
+    # Not logged in - show login UI
+    st.title("PMP Exam Simulator")
+    st.image("PMPExamBanner.jpg", width=800)
+    st.write("Please sign in to continue.")
 
     try:
-        user = get_or_create_user(user_info["email"], user_info["id"])
+        authorization_url = authenticator.get_authorization_url()
+        st.link_button("Sign in with Google", authorization_url, type="primary")
     except Exception as e:
-        st.error("Sign-in succeeded, but user profile initialization failed.")
-        st.caption(f"Initialization error details: {e}")
-        return None
+        st.error(f"Could not generate login URL: {e}")
+        st.caption("Please check your OAuth configuration in Streamlit Cloud secrets.")
 
-    if not user:
-        st.error(
-            "Sign-in succeeded, but database connection could not be initialized. "
-            "Please verify Firebase secrets in Streamlit Cloud and try again."
-        )
-        return None
+    return None
 
-    user["name"] = user_info.get("name") or user.get("email", user_info["email"]).split("@")[0]
-    user["picture"] = user_info.get("picture")
-
-    if not user.get("is_enabled", False):
-        st.error("Your account is disabled. Contact administrator.")
-        if st.button("Logout"):
-            st.logout()
-        return None
-
-    st.session_state[SessionKeys.USER] = user
-    return user
 
 def get_or_create_user(email: str, uid: str) -> dict:
     """Get existing user or create new one in Firestore."""
     db = get_db()
     if not db:
         return {}
-        
+
     user_ref = db.collection("users").document(uid)
     user_doc = user_ref.get()
 
     if user_doc.exists:
         existing_user = user_doc.to_dict() or {}
         normalized = _normalize_user_payload(existing_user, email, uid)
-        # Persist backfilled fields so future logins are stable.
         if normalized != existing_user:
             user_ref.set(normalized, merge=True)
         return normalized
 
     # Create new user
     new_user = _normalize_user_payload({}, email, uid)
-    # New students require admin approval before they can access exams.
     if new_user["role"] == UserRole.STUDENT:
         new_user["is_enabled"] = False
     user_ref.set(new_user)
     return new_user
 
+
 def logout():
     """Clear session and logout."""
+    try:
+        authenticator = _get_authenticator()
+        authenticator.logout()
+    except Exception:
+        pass
+
     for key in list(st.session_state.keys()):
         del st.session_state[key]
-    st.logout()
+    st.rerun()

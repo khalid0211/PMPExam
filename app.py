@@ -50,8 +50,7 @@ def main():
             st.write(f"Role: {display_role}")
             
             if st.button("Logout", key="logout_btn"):
-                logout()
-                st.rerun()
+                logout()  # logout() already calls st.rerun()
                 
             st.divider()
             
