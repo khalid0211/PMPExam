@@ -13,9 +13,9 @@ SCOPES = [
 
 
 def _build_flow() -> Flow:
-    client_id = st.secrets["auth"]["client_id"]
-    client_secret = st.secrets["auth"]["client_secret"]
-    redirect_uri = st.secrets["auth"]["redirect_uri"]
+    client_id = st.secrets["google_oauth"]["client_id"]
+    client_secret = st.secrets["google_oauth"]["client_secret"]
+    redirect_uri = st.secrets["google_oauth"]["redirect_uri"]
 
     # Allow plain HTTP for local development
     if redirect_uri.startswith("http://"):
