@@ -2,6 +2,41 @@ import streamlit as st
 from firebase_config import get_db
 from config import ADMIN_EMAIL, SessionKeys, UserRole
 
+def _run_firebase_health_check():
+    """Run lightweight checks for Firebase configuration and Firestore access."""
+    required_keys = [
+        "type",
+        "project_id",
+        "private_key_id",
+        "private_key",
+        "client_email",
+        "client_id",
+        "auth_uri",
+        "token_uri",
+        "auth_provider_x509_cert_url",
+        "client_x509_cert_url",
+    ]
+    firebase_secrets = st.secrets.get("firebase", {})
+    missing = [k for k in required_keys if not firebase_secrets.get(k)]
+    if missing:
+        st.error("Firebase secrets are missing required keys.")
+        st.caption(f"Missing keys: {', '.join(missing)}")
+        return
+
+    db = get_db()
+    if not db:
+        st.error("Firebase initialization failed.")
+        return
+
+    try:
+        # Read-only probe to validate Firestore connectivity and permissions.
+        db.collection("users").limit(1).get()
+        st.success("Firebase and Firestore connectivity look healthy.")
+        st.caption("Initialization succeeded and a Firestore read completed.")
+    except Exception as e:
+        st.error("Firestore read check failed.")
+        st.caption(f"Firestore error details: {e}")
+
 def _read_user_field(user_obj, field, default=None):
     """Read auth fields from both object-style and dict-style user payloads."""
     try:
@@ -109,6 +144,10 @@ def handle_login():
         st.title("PMP Exam Simulator")
         st.image("PMPExamBanner.jpg", use_column_width=True)
         st.write("Please sign in to continue.")
+        with st.expander("Troubleshoot Firebase / Login", expanded=False):
+            st.caption("Use this if Google sign-in returns an internal server error.")
+            if st.button("Run Firebase Health Check", key="firebase_health_btn"):
+                _run_firebase_health_check()
         if st.button("Sign in with Google", type="primary"):
             try:
                 _trigger_streamlit_login()
