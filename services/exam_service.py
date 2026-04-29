@@ -41,13 +41,13 @@ class ExamService:
     def get_in_progress_exam(self, user_id: str) -> dict:
         if not self.collection:
             return None
-        docs = (self.collection
-                .where(filter=FieldFilter("user_id", "==", user_id))
-                .where(filter=FieldFilter("status", "==", ExamStatus.IN_PROGRESS))
-                .limit(1)
-                .stream())
+        # Avoid composite-index dependency by querying user exams first,
+        # then filtering in application code for in-progress status.
+        docs = self.collection.where(filter=FieldFilter("user_id", "==", user_id)).stream()
         for doc in docs:
-            return doc.to_dict()
+            exam = doc.to_dict() or {}
+            if exam.get("status") == ExamStatus.IN_PROGRESS:
+                return exam
         return None
 
     def save_answer(self, exam_id: str, question_id: str, answer: str):
