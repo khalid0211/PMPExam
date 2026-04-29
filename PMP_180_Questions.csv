@@ -1,181 +1,180 @@
-﻿SNo.,Domain,Question,Option A,Option B,Option C,Option D,Correct Answer
-1,People,A team member is consistently late to the daily stand-up. What should the Scrum Master do?,Reprimand them in front of the team,Meet with them privately to discuss the impact on the team,Ignore it as long as their work is done,Ask the Product Owner to replace them,B
-2,People,Two senior stakeholders have conflicting requirements. What is the PM’s first step?,Choose the requirement from the more senior stakeholder,Escalate to the Sponsor,Facilitate a meeting between them to reach a consensus,Submit both to the Change Control Board (CCB),C
-3,People,An agile team feels the Product Owner is micromanaging tasks. What should the Scrum Master do?,Tell the team to ignore the Product Owner,Coach the Product Owner on agile roles and servant leadership,Ask the team to follow all instructions,Take over the Product Owner s responsibilities,B
-4,People,A PM is leading a global virtual team. Team members feel disconnected. What should the PM do?,Require everyone to travel to headquarters,Set up periodic informal virtual  coffee breaks  to build rapport,Send more frequent status emails,Increase the number of mandatory project meetings,B
-5,People,A team member wants to learn a new skill not required now but useful later. What should the PM do?,Deny the request to save costs,Support the request as it builds team capability and motivation,Tell them to learn it on their own time,Replace them with someone who already has the skill,B
-6,People,During a meeting  a team member is constantly interrupted. What should the PM do?,End the meeting,Tell the members to speak louder,Intervene and ensure all voices are heard,Do nothing to avoid conflict,C
-7,People,A team is in the  Storming  phase. What is the PM s role?,Delegate all decisions,Provide high direction and support to resolve conflicts,Step back and let them fail,Dictate all tasks strictly,B
-8,People,The stakeholder is unhappy with progress. What should the PM do first?,Show them the project schedule,Meet with them to understand their concerns,Ignore the stakeholder,Ask the Sponsor to talk to them,B
-9,People,An agile team is distracted by  emergency  requests from a functional manager. What should the Scrum Master do?,Tell the team to work overtime,Meet with the functional manager to protect the team from interruptions,Add requests to the current sprint,Tell the team to ignore the manager,B
-10,People,A PM wants to empower the team. What is the best approach?,Assign every task personally,Define the  what  and let the team decide the  how ,Make all decisions in private,Ask for approval on every email,B
-11,People,A team member is underperforming due to a personal issue. What should the PM do?,Show empathy and discuss how to support them,File a formal HR complaint,Replace them immediately,Deduct their pay,A
-12,People,A PM is using Emotional Intelligence (EI) to manage conflict. What is the first step?,Self-awareness,Social skills,Empathy,Motivation,A
-13,People,A stakeholder wants to give orders directly to the team. What should the PM do?,Quit the project,Tell the team to listen to the stakeholder,Explain the communication protocol to the stakeholder,Charge the stakeholder for the extra work,C
-14,People,A PM holds a brainstorming session for complex problems. This is an example of:,Directing,Facilitating,Managing,Dictating,B
-15,People,A PM is mentoring a junior PM. What is the best way to help?,Give them all the data entry work,Provide feedback  guidance  and responsibility,Let them fail without help,Tell them to read the PMBOK Guide only,B
-16,People,A team member is recognized for excellent work. How should the PM reward them?,Give them more work,Use a reward system meaningful to the individual,Give everyone the same reward,Do nothing,B
-17,People,A virtual team member is not responding to emails. What should the PM do?,Assume they are lazy,Try a different communication medium (e.g.  video call),Report them to their manager,Remove them from the team,B
-18,People,A PM wants to ensure the team understands the vision. What should they use?,A 100-page report,A clear and concise project vision statement,A list of tasks,A budget spreadsheet,B
-19,People,Which conflict resolution technique leads to a  Win-Win ?,Collaborating/Problem Solving,Compromising,Forcing,Smoothing,A
-20,People,A PM uses  Servant Leadership.  What is their primary focus?,Controlling the team,Supporting and enabling the team to succeed,Pleasing the Sponsor,Following the rules,B
-21,People,A team is diverse. What should the PM do?,Treat everyone exactly the same  ignoring culture,Promote cultural awareness and respect differences,Only hire people from one culture,Force everyone to adopt the PM s culture,B
-22,People,A team member does not follow  ground rules.  What should the PM do?,Change the rules,Remind the member of the agreed-upon rules,Publicly shame them,Ignore it,B
-23,People,A PM wants to foster transparency in Agile. What is the best tool?,Private emails,A public Kanban board,Locked spreadsheets,Monthly status reports,B
-24,People,A stakeholder is worried about a specific risk. What should the PM do?,Involve the stakeholder in the risk analysis,Tell them not to worry,Hide the risk,Blame someone else,A
-25,People,A team member is  Over-allocated.  What should the PM do?,Make them work 80 hours a week,Use resource leveling or prioritize tasks,Hire a new team,Tell them to work faster,B
-26,People,A PM is leading a team of experts. Which leadership style is best?,Autocratic,Participative/Laissez-faire,Micro-managing,Directing,B
-27,People,A project is being closed. What should the PM do for the team?,Celebrate successes and conduct  Lessons Learned ,Stop talking to them,Give them a bad review,Start the next project immediately,A
-28,People,A team is struggling with a technical hurdle. What should the PM do?,Solve it themselves,Bring in a subject matter expert (SME) to coach,Tell the team to figure it out,Cancel the project,B
-29,People,A manager takes a resource for an emergency. What should the PM do?,Negotiate with the manager for a replacement,File a lawsuit,Refuse to let the resource go,Stop the project,A
-30,People,A PM is building  Shared Understanding.  What helps most?,Lengthy documents,Face-to-face communication and active listening,Strictly following the WBS,Only talking to the team leader,B
-31,People,An agile team is  Self-Organizing.  This means:,They have no manager,They decide how to do their work as a team,They do whatever they want,They don t have to follow a budget,B
-32,People,A team member makes a mistake. What should the PM do?,Fire them,Use it as a learning opportunity,Blame them in the report,Hide the mistake,B
-33,People,A PM is identifying stakeholders. Who is a stakeholder?,Only the customer,Only the team,Anyone affected by the project,Only the PMO,C
-34,People,In RACI  the  A  stands for:,Assigned,Accountable,Authorized,Analyst,B
-35,People,A project is failing. The PM gathers the team to find out why. This is:,Blaming,Root Cause Analysis,Waste of time,Micromanagement,B
-36,People,A PM wants to improve team  Velocity.  What should they focus on?,Working more hours,Removing impediments,Hiring more people,Cutting scope,B
-37,People,A team member feels their ideas are never heard. What should the PM do?,Tell them their ideas aren t good,Ensure they have a platform (e.g.  Retrospective),Ignore them,Promote them,B
-38,People, Active Listening  involves:,Hearing but not responding,Confirming understanding and reflecting,Multi-tasking,Interrupting,B
-39,People,A team is  Co-located.  This means:,They work in different cities,They work in the same physical space,They use the same software,They have the same manager,B
-40,People,What is a  T-Shaped  professional?,Someone who only knows one thing,Someone with deep expertise in one area and broad knowledge in others,Someone who works in a T-shaped building,A manager,B
-41,People,What is the best outcome of conflict?,Someone loses,Innovative solutions and better team cohesion,People quit,The project is delayed,B
-42,People,A  360-degree feedback  involves:,Only the PM s opinion,Feedback from peers  subordinates  and managers,A 360-minute meeting,Looking around the room,B
-43,People,A  Product Owner  is responsible for:,Managing the team s schedule,Maximizing product value and managing the backlog,Coding the product,Hiring the PM,B
-44,People, Mentoring  is:,Telling someone what to do,A long-term professional relationship focused on growth,A one-time meeting,Formal training,B
-45,People, Coaching  is:,Managing a sports team,Helping someone improve a specific skill,Telling them they are doing a bad job,Writing a report,B
-46,People,A  Burnup Chart  shows:,Total work completed vs. total scope,How much money is left,Team frustration,People who left,A
-47,People,A  Burndown Chart  shows:,Work added,Remaining work in a sprint,The budget,The schedule,B
-48,People,Negotiation should focus on:,Winning at all costs,Reaching an agreement that satisfies both parties,Trickery,Giving up,B
-49,People,What is a major risk in a  Virtual Team ?,Too much communication,Misunderstandings due to lack of non-verbal cues,No travel costs,People working too hard,B
-50,People,A  Project Charter  is important because it:,Lists every task,Formally authorizes the project,Contains the final budget,Is written by the team,B
-51,People, Empowering  the team increases:,The PM s workload,Team ownership and motivation,The chance of failure,The budget,B
-52,People,A team member is an  Expert.  The PM should:,Tell them exactly what to do,Involve them in decision-making,Ignore them,Feel threatened,B
-53,People,A stakeholder is  Resistant.  The PM should:,Avoid them,Try to understand and address their concerns,Fire them,Force them,B
-54,People,A  Team Charter  includes:,Project budget,Team values and ground rules,Product specifications,Customer names,B
-55,People, Psychological Safety  means:,The office is locked,Team members feel safe to take risks,Everyone is happy,No disagreements,B
-56,People, Positive Feedback  should be:,Rare,Specific  timely  and sincere,General,Only for the PM,B
-57,People,A  Cross-functional  team has:,Only developers,Members from different departments,Only managers,No leader,B
-58,People,Motivation is influenced by:,Just money,Achievement and recognition,Working conditions only,Fear,B
-59,People, McGregor’s Theory Y  assumes:,People hate work,People are self-motivated,People need constant watching,People are lazy,B
-60,People, Maslow’s Hierarchy  ends with:,Food,Self-actualization,Safety,Social needs,B
-61,People,Using  Influence  over  Authority  is common in:,Military,Matrix organizations,Projectized organizations,Dictatorships,B
-62,People,When  Onboarding  a new member  a PM should:,Introduce them to the vision and their role,Give them work and leave,Tell them to figure it out,Ignore them,A
-63,People,Conflict in agile teams is often resolved:,By the PM,By the team during retrospectives,By the CEO,By coin flip,B
-64,People,A  Stakeholder Engagement Assessment Matrix  shows:,Current vs. desired engagement,Salaries,Phone numbers,Risks,A
-65,People,When  Negotiating  with a vendor  focus on:,Lying about budget,Interests  not positions,Being aggressive,First offer,B
-66,People,A  Sprint Retrospective  is for:,Showing the product,Improving process,Planning next sprint,Firing people,B
-67,People,A  Daily Stand-up  should last:,15 minutes,1 hour,5 minutes,As long as needed,A
-68,People,The  Three Questions  of a Daily Stand-up focus on:,Cost and talk,Yesterday  today  and blockers,Time and budget,Philosophy,B
-69,People,A  Blocker  is:,A team member,Anything stopping the team,A finished task,A project goal,B
-70,People, Servant Leaders  manage:,People,Environment and obstacles,Budget only,Schedule only,B
-71,People,Nodding during  Active Listening  shows:,Agreement,Listening and understanding,Tiredness,Desire to speak,B
-72,People,For a  Burned out  member  the PM should:,Give more work,Encourage time off and re-evaluate load,Tell them to be stronger,Ignore it,B
-73,People,A  Resource Management Plan  includes:,Names only,How resources are acquired and managed,Laptop prices,Schedule,B
-74,People,A  Power/Interest Grid  helps:,Calculate power,Determine stakeholder engagement strategy,Find critical path,Manage budget,B
-75,People, Soft Skills  include:,Coding,Communication and leadership,Math,Scheduling,B
-76,People,The  Project Manager  is responsible for:,Doing all work,Project success and leadership,Making coffee,Approving Sponsor s vacation,B
-77,Process, Defining a new project  is part of:,Initiating,Planning,Executing,Closing,A
-78,Process,The goal of a WBS is to:,List people,Decompose deliverables into manageable components,Create a schedule,Set budget,B
-79,Process,The  Critical Path  is:,Path with most tasks,Longest path with zero float,Shortest path,Most expensive path,B
-80,Process, Analogous Estimating  is:,Math-based,Using actual costs from similar projects,Bottom-up,Random,B
-81,Process, Parametric Estimating  uses:,Statistical relationships (e.g.  $ per sq. ft.),Expert judgment,WBS only,Team opinion,A
-82,Process,A CPI of 0.8 means:,Under budget,Over budget (only $0.80 value per $1 spent),Ahead of schedule,80% done,B
-83,Process,An SPI of 1.2 means:,Behind schedule,Ahead of schedule,Over budget,PM is young,B
-84,Process, Earned Value  (EV) is:,Value of work actually performed,Money spent,Planned budget,Total budget,A
-85,Process, Actual Cost  (AC) is:,Budget,Cost incurred for work performed,Money left,Profit,B
-86,Process,CV formula:,EV - AC,EV - PV,AC - EV,PV - EV,A
-87,Process,SV formula:,EV - AC,EV - PV,PV - EV,AC - PV,B
-88,Process, Change Requests  are approved by:,PM only,CCB or defined authority,Team,Customer only,B
-89,Process, Scope Creep  is:,Insects,Uncontrolled scope expansion,Good thing,Planned change,B
-90,Process, Gold Plating  is:,Actual gold,Adding unrequested features,Following scope,Expensive resources,B
-91,Process,A  Risk Register  contains:,Big risks only,Identified risks  responses  and owners,Budget,Team names,B
-92,Process, Risk Mitigation  involves:,Ignoring risk,Reducing probability or impact,Moving to third party,Avoiding,B
-93,Process, Risk Transfer  involves:,Fixing,Shifting ownership (e.g.  insurance),Ignoring,Accepting,B
-94,Process, Qualitative Risk Analysis  prioritizes by:,Dollars,Probability and impact,PM s mood,Schedule,B
-95,Process, Quantitative Risk Analysis  involves:,Numerical simulation (e.g.  Monte Carlo),Categorizing,Listing,Talking,A
-96,Process, Quality Assurance  focuses on:,Product,Process,Budget,Customer,B
-97,Process, Quality Control  focuses on:,Deliverables,Process,PM,Vendor,A
-98,Process, Pareto Chart  rule:,80/20,50/50,100%,PM s rule,A
-99,Process, Fishbone Diagram  use:,Tracking,Finding root cause,Scheduling,Risk ID,B
-100,Process, Crashing  means:,Adding resources to shorten time,Parallel tasks,Deleting tasks,Faster work,B
-101,Process, Fast Tracking  means:,Resources,Overlapping sequential tasks,Faster clock,Skipping checks,B
-102,Process, Fixed Price  is best when:,Unknown scope,Well-defined scope,New PM,Agile,B
-103,Process, Cost Plus  is best when:,Scope undefined,Fixed scope,No money,Short project,A
-104,Process, T&M  is for:,Small/quick tasks or undefined scope,Bridges,Fixed scope,Large projects,A
-105,Process, Procurement  is:,Hiring PM,Purchasing outside goods/services,Team management,Selling,B
-106,Process,A  Sprint  is:,Time-boxed iteration,Fast run,Meeting,Document,A
-107,Process,Backlog owner:,Scrum Master,Product Owner,Team,Sponsor,B
-108,Process,Sprint Backlog owner:,PO,Team,SM,PMO,B
-109,Process,User Story format:,As a [user]  I want [action]  so that [value],Now,Task list,Deadline,A
-110,Process,DoD ensures:,Tiredness,Shared understanding of completion,Project end,Payment,B
-111,Process, Velocity  is:,Work completed per sprint,Internet speed,Duration,PM speed,A
-112,Process, Retrospective  timing:,Start,End of every sprint,Yearly,After firing,B
-113,Process, Kanban  focuses on:,Visualizing and WIP limits,Sprints,Roles,Estimating,A
-114,Process,A  Spike  is for:,Bug fix,Research/Investigation,Feature build,Celebration,B
-115,Process, Story Points  measure:,Relative effort/complexity,Hours,Days,Dollars,A
-116,Process, Planning Poker  use:,Gambling,Estimating user stories,Choosing PM,Risks,B
-117,Process, Hybrid :,Combines Waterfall and Agile,Electric cars,Software only,Two PMs,A
-118,Process, Project Management Plan :,Single doc,Subsidiary plans and baselines,Schedule,WBS,B
-119,Process, Integration :,Hiring,Coordinating all aspects,Coding,Talking,B
-120,Process, Lessons Learned  update:,Only end,Throughout project,Never,On request,B
-121,Process, Benchmarking :,Benches,Comparing to other projects,Testing,Budgeting,B
-122,Process, Monte Carlo  for:,Gambling,Simulating risk outcomes,Scheduling,Quality,B
-123,Process, Resource Leveling :,May delay project to balance load,Speed up,Lower cost,Increase scope,A
-124,Process, Resource Smoothing :,Changes critical path,Uses available float  no delay,Balances,Budget affect,B
-125,Process, Control Chart :,Process stability,Schedule,Budget,Performance,A
-126,Process, JIT :,Reduces inventory cost,Increases,Delays,Software only,A
-127,Process, Kaizen :,Stop,Continuous improvement,Fast,Quality,B
-128,Process, Six Sigma :,Speed,Reducing defects,Cost,Scope,B
-129,Process, TQM :,Quality team,Everyone,PM only,Customer,B
-130,Process, COQ  includes:,Prevention  appraisal  failure,Price only,PM salary,Testing price,A
-131,Process, Verified Deliverables :,Customer,Quality Control,Team,Sponsor,B
-132,Process, Accepted Deliverables :,Customer (Validate Scope),QC,PM,Dev,A
-133,Process, Scope Statement :,Budget,Deliverables  assumptions  exclusions,Schedule,Team,B
-134,Process, RTM  links:,People,Requirements to deliverables,Risk to Issue,Budget to Schedule,B
-135,Process, Work Package :,Lowest WBS level,Box,Task,Phase,A
-136,Process, Planning Package :,Gift,WBS component with known content but no activities,Task,Plan,B
-137,Process, Rolling Wave :,End only,Near term detailed  future high level,No plan,Surfing,B
-138,Process, PDM :,FS only,All relationships (FS  SS  FF  SF),Circles,No logic,B
-139,Process, Lead :,PM,Acceleration of successor,Metal,Delay,B
-140,Process, Lag :,Fast,Mandatory delay,Error,Risk,B
-141,Process, Bottom-up :,Fast,Accurate but slow,Inaccurate,Sponsor work,A
-142,Process,PERT Beta:,(O + 4M + P) / 6,(O + M + P) / 3,Sum,/ 4,B
-143,Process, Management Reserve :,Known,Unknown-Unknowns,Known-Unknowns,Bonus,A
-144,Process, Contingency :,Unknown,Known-Unknowns,Customer,Scope,B
-145,Process, BAC :,Budget at Completion,Business,Control,Best,B
-146,Process, EAC :,Estimate at Completion,Early,Controlled,Activity cost,A
-147,Process, ETC :,Estimate to Complete,Time,Task,End,A
-148,Process, TCPI :,To-Complete Performance Index,Total,Percent,Time,A
-149,Process, Governance :,Laws,Framework guiding activities,PM rules,CEO orders,A
-150,Process, Configuration :,Product specs and documentation,Hardware,Hiring,Budget,B
-151,Process, Change Log :,All work,Change request status,Risks,Stakeholders,A
-152,Process, Issue Log :,Risks,Current problems,Potential,Done tasks,B
-153,Process, Communication Plan :,Who  what  when  how,Cost,Speaker,Phones,B
-154,Process, Push :,Sending (e.g.  email),Finding,Meeting,Forcing,A
-155,Process, Pull :,Email,Accessing (e.g.  Intranet),Call,Yelling,A
-156,Process, Interactive :,Multidirectional,One-way,Report,Sign,B
-157,Process, Risk Appetite :,Hunger,Willingness to take uncertainty,Avoiding,Taking all,A
-158,Process, Threshold :,Unacceptable risk level,Start,End,Report,B
-159,Process, Tornado :,Sensitivity Analysis,Schedule,Resource,Procurement,A
-160,Process, Bidder Conferences :,Meet team,Common understanding for sellers,Lowest price,Customer happy,A
-161,Process, Make-or-Buy :,Internal vs. External decision,Price,Vendor choice,Profit,B
-162,Process, SOW :,Work for vendor,PM job,Roles,Vision,A
-163,Process, Closing :,Acceptance  transition  archive,Stopping,Deleting,Firing,A
-164,Process, Final Report :,Performance summary and benefits,All emails,Resume,Meeting list,A
-165,Process, Knowledge Transfer :,End only,Throughout and at closing,Never,Agile only,A
-166,Process,Ultimate goal:,Docs,Value delivery,Schedule,Budget,B
-167,Business,PM must ensure compliance with:,Legal and organizational standards,PM rules only,Customer whims,No rules,A
-168,Business, Business Value :,Tangible and intangible elements,Profit only,Price,Employees,A
-169,Business, Business Case :,Benefits vs. Investment,PM preference,Team skill,Schedule,A
-170,Business, Benefits Management Plan :,How benefits are measured/delivered,Team pay,Features,Risks,A
-171,Business,Project not aligned with strategy:,Keep working,Discuss with Sponsor to redirect/close,Change strategy,Hide it,B
-172,Business, Organizational Culture :,Affects decisions/interactions,Weather,Nothing,Dress code,A
-173,Business, PMO :,Supportive  Controlling  Directive,Bossy,Training only,A room,A
-174,Business, NPV :,Positive for viability,Negative,Zero,Ignored,A
-175,Business, IRR :,Higher is better,Lower,Irrelevant,Agile only,A
-176,Business, Payback :,Time to recover investment,Team pay,End date,Risk,A
-177,Business, Organizational Change :,Helping transition to the new state,Change PM,Change budget,Firing,A
-178,Business, Compliance Audit :,Following regulations,PM working,Team happy,Pretty product,A
-179,Business,Change in government policy:,Ignore,Assess impact,Stop,Media,B
-180,Business,Ultimate goal:,Docs,Value delivery,Schedule,Budget,B
+﻿SNo.,Domain,Question,Option A,Option B,Option C,Option D,Correct Answer,,Len
+126,Process,JIT :,Reduces inventory cost,Increases,Delays,Software only,A,,5
+129,Process,TQM :,Quality team,Everyone,PM only,Customer,B,,5
+138,Process,PDM :,FS only,All relationships (FS  SS  FF  SF),Circles,No logic,B,,5
+140,Process,Lag :,Fast,Mandatory delay,Error,Risk,B,,5
+145,Process,BAC :,Budget at Completion,Business,Control,Best,B,,5
+146,Process,EAC :,Estimate at Completion,Early,Controlled,Activity cost,A,,5
+147,Process,ETC :,Estimate to Complete,Time,Task,End,A,,5
+162,Process,SOW :,Work for vendor,PM job,Roles,Vision,A,,5
+173,Business,PMO :,Supportive  Controlling  Directive,Bossy,Training only,A room,A,,5
+174,Business,NPV :,Positive for viability,Negative,Zero,Ignored,A,,5
+175,Business,IRR :,Higher is better,Lower,Irrelevant,Agile only,A,,5
+139,Process,Lead :,PM,Acceleration of successor,Metal,Delay,B,,6
+148,Process,TCPI :,To-Complete Performance Index,Total,Percent,Time,A,,6
+154,Process,Push :,Sending (e.g.  email),Finding,Meeting,Forcing,A,,6
+155,Process,Pull :,Email,Accessing (e.g.  Intranet),Call,Yelling,A,,6
+117,Process,Hybrid :,Combines Waterfall and Agile,Electric cars,Software only,Two PMs,A,,8
+127,Process,Kaizen :,Stop,Continuous improvement,Fast,Quality,B,,8
+142,Process,PERT Beta:,(O + 4M + P) / 6,(O + M + P) / 3,Sum,/ 4,B,,10
+159,Process,Tornado :,Sensitivity Analysis,Schedule,Resource,Procurement,A,,9
+163,Process,Closing :,Acceptance  transition  archive,Stopping,Deleting,Firing,A,,9
+176,Business,Payback :,Time to recover investment,Team pay,End date,Risk,A,,9
+86,Process,CV formula:,EV - AC,EV - PV,AC - EV,PV - EV,A,,11
+87,Process,SV formula:,EV - AC,EV - PV,PV - EV,AC - PV,B,,11
+110,Process,DoD ensures:,Tiredness,Shared understanding of completion,Project end,Payment,B,,12
+128,Process,Six Sigma :,Speed,Reducing defects,Cost,Scope,B,,11
+134,Process,RTM links:,People,Requirements to deliverables,Risk to Issue,Budget to Schedule,B,,10
+141,Process,Bottom-up :,Fast,Accurate but slow,Inaccurate,Sponsor work,A,,11
+152,Process,Issue Log :,Risks,Current problems,Potential,Done tasks,B,,11
+158,Process,Threshold :,Unacceptable risk level,Start,End,Report,B,,11
+104,Process,T&M is for:,Small/quick tasks or undefined scope,Bridges,Fixed scope,Large projects,A,,11
+149,Process,Governance :,Laws,Framework guiding activities,PM rules,CEO orders,A,,12
+151,Process,Change Log :,All work,Change request status,Risks,Stakeholders,A,,12
+45,People,Coaching is:,Managing a sports team,Helping someone improve a specific skill,Telling them they are doing a bad job,Writing a report,B,,12
+106,Process,A Sprint is:,Time-boxed iteration,Fast run,Meeting,Document,A,,12
+107,Process,Backlog owner:,Scrum Master,Product Owner,Team,Sponsor,B,,14
+111,Process,Velocity is:,Work completed per sprint,Internet speed,Duration,PM speed,A,,12
+119,Process,Integration :,Hiring,Coordinating all aspects,Coding,Talking,B,,13
+144,Process,Contingency :,Unknown,Known-Unknowns,Customer,Scope,B,,13
+156,Process,Interactive :,Multidirectional,One-way,Report,Sign,B,,13
+161,Process,Make-or-Buy :,Internal vs. External decision,Price,Vendor choice,Profit,B,,13
+166,Process,Ultimate goal:,Docs,Value delivery,Schedule,Budget,B,,14
+44,People,Mentoring is:,Telling someone what to do,A long-term professional relationship focused on growth,A one-time meeting,Formal training,B,,13
+69,People,A Blocker is:,A team member,Anything stopping the team,A finished task,A project goal,B,,13
+121,Process,Benchmarking :,Benches,Comparing to other projects,Testing,Budgeting,B,,14
+130,Process,COQ includes:,Prevention  appraisal  failure,Price only,PM salary,Testing price,A,,13
+135,Process,Work Package :,Lowest WBS level,Box,Task,Phase,A,,14
+137,Process,Rolling Wave :,End only,Near term detailed  future high level,No plan,Surfing,B,,14
+164,Process,Final Report :,Performance summary and benefits,All emails,Resume,Meeting list,A,,14
+125,Process,Control Chart :,Process stability,Schedule,Budget,Performance,A,,15
+150,Process,Configuration :,Product specs and documentation,Hardware,Hiring,Budget,B,,15
+157,Process,Risk Appetite :,Hunger,Willingness to take uncertainty,Avoiding,Taking all,A,,15
+169,Business,Business Case :,Benefits vs. Investment,PM preference,Team skill,Schedule,A,,15
+89,Process,Scope Creep is:,Insects,Uncontrolled scope expansion,Good thing,Planned change,B,,15
+100,Process,Crashing means:,Adding resources to shorten time,Parallel tasks,Deleting tasks,Faster work,B,,15
+105,Process,Procurement is:,Hiring PM,Purchasing outside goods/services,Team management,Selling,B,,15
+114,Process,A Spike is for:,Bug fix,Research/Investigation,Feature build,Celebration,B,,15
+168,Business,Business Value :,Tangible and intangible elements,Profit only,Price,Employees,A,,16
+90,Process,Gold Plating is:,Actual gold,Adding unrequested features,Following scope,Expensive resources,B,,16
+109,Process,User Story format:,As a [user]  I want [action]  so that [value],Now,Task list,Deadline,A,,18
+122,Process,Monte Carlo for:,Gambling,Simulating risk outcomes,Scheduling,Quality,B,,16
+133,Process,Scope Statement :,Budget,Deliverables  assumptions  exclusions,Schedule,Team,B,,17
+82,Process,A CPI of 0.8 means:,Under budget,Over budget (only $0.80 value per $1 spent),Ahead of schedule,80% done,B,,19
+136,Process,Planning Package :,Gift,WBS component with known content but no activities,Task,Plan,B,,18
+178,Business,Compliance Audit :,Following regulations,PM working,Team happy,Pretty product,A,,18
+83,Process,An SPI of 1.2 means:,Behind schedule,Ahead of schedule,Over budget,PM is young,B,,20
+98,Process,Pareto Chart rule:,80/20,50/50,100%,PM s rule,A,,18
+113,Process,Kanban focuses on:,Visualizing and WIP limits,Sprints,Roles,Estimating,A,,18
+123,Process,Resource Leveling :,May delay project to balance load,Speed up,Lower cost,Increase scope,A,,19
+108,Process,Sprint Backlog owner:,PO,Team,SM,PMO,B,,21
+116,Process,Planning Poker use:,Gambling,Estimating user stories,Choosing PM,Risks,B,,19
+124,Process,Resource Smoothing :,Changes critical path,Uses available float  no delay,Balances,Budget affect,B,,20
+143,Process,Management Reserve :,Known,Unknown-Unknowns,Known-Unknowns,Bonus,A,,20
+153,Process,Communication Plan :,Who  what  when  how,Cost,Speaker,Phones,B,,20
+160,Process,Bidder Conferences :,Meet team,Common understanding for sellers,Lowest price,Customer happy,A,,20
+165,Process,Knowledge Transfer :,End only,Throughout and at closing,Never,Agile only,A,,20
+75,People,Soft Skills include:,Coding,Communication and leadership,Math,Scheduling,B,,20
+85,Process,Actual Cost (AC) is:,Budget,Cost incurred for work performed,Money left,Profit,B,,20
+101,Process,Fast Tracking means:,Resources,Overlapping sequential tasks,Faster clock,Skipping checks,B,,20
+46,People,A Burnup Chart shows:,Total work completed vs. total scope,How much money is left,Team frustration,People who left,A,,21
+79,Process,The Critical Path is:,Path with most tasks,Longest path with zero float,Shortest path,Most expensive path,B,,21
+84,Process,Earned Value (EV) is:,Value of work actually performed,Money spent,Planned budget,Total budget,A,,21
+99,Process,Fishbone Diagram use:,Tracking,Finding root cause,Scheduling,Risk ID,B,,21
+112,Process,Retrospective timing:,Start,End of every sprint,Yearly,After firing,B,,21
+115,Process,Story Points measure:,Relative effort/complexity,Hours,Days,Dollars,A,,21
+78,Process,The goal of a WBS is to:,List people,Decompose deliverables into manageable components,Create a schedule,Set budget,B,,24
+131,Process,Verified Deliverables :,Customer,Quality Control,Team,Sponsor,B,,23
+132,Process,Accepted Deliverables :,Customer (Validate Scope),QC,PM,Dev,A,,23
+177,Business,Organizational Change :,Helping transition to the new state,Change PM,Change budget,Firing,A,,23
+47,People,A Burndown Chart shows:,Work added,Remaining work in a sprint,The budget,The schedule,B,,23
+70,People,Servant Leaders manage:,People,Environment and obstacles,Budget only,Schedule only,B,,23
+93,Process,Risk Transfer involves:,Fixing,Shifting ownership (e.g.  insurance),Ignoring,Accepting,B,,23
+103,Process,Cost Plus is best when:,Scope undefined,Fixed scope,No money,Short project,A,,23
+120,Process,Lessons Learned update:,Only end,Throughout project,Never,On request,B,,23
+172,Business,Organizational Culture :,Affects decisions/interactions,Weather,Nothing,Dress code,A,,24
+54,People,A Team Charter includes:,Project budget,Team values and ground rules,Product specifications,Customer names,B,,24
+80,Process,Analogous Estimating is:,Math-based,Using actual costs from similar projects,Bottom-up,Random,B,,24
+118,Process,Project Management Plan :,Single doc,Subsidiary plans and baselines,Schedule,WBS,B,,25
+91,Process,A Risk Register contains:,Big risks only,Identified risks  responses  and owners,Budget,Team names,B,,25
+92,Process,Risk Mitigation involves:,Ignoring risk,Reducing probability or impact,Moving to third party,Avoiding,B,,25
+102,Process,Fixed Price is best when:,Unknown scope,Well-defined scope,New PM,Agile,B,,25
+170,Business,Benefits Management Plan :,How benefits are measured/delivered,Team pay,Features,Risks,A,,26
+34,People,In RACI the A stands for:,Assigned,Accountable,Authorized,Analyst,B,,25
+38,People,Active Listening involves:,Hearing but not responding,Confirming understanding and reflecting,Multi-tasking,Interrupting,B,,26
+48,People,Negotiation should focus on:,Winning at all costs,Reaching an agreement that satisfies both parties,Trickery,Giving up,B,,28
+58,People,Motivation is influenced by:,Just money,Achievement and recognition,Working conditions only,Fear,B,,28
+179,Business,Change in government policy:,Ignore,Assess impact,Stop,Media,B,,28
+55,People,Psychological Safety means:,The office is locked,Team members feel safe to take risks,Everyone is happy,No disagreements,B,,27
+81,Process,Parametric Estimating uses:,Statistical relationships (e.g.  $ per sq. ft.),Expert judgment,WBS only,Team opinion,A,,27
+97,Process,Quality Control focuses on:,Deliverables,Process,PM,Vendor,A,,27
+56,People,Positive Feedback should be:,Rare,Specific  timely  and sincere,General,Only for the PM,B,,28
+57,People,A Cross-functional team has:,Only developers,Members from different departments,Only managers,No leader,B,,28
+59,People,McGregor’s Theory Y assumes:,People hate work,People are self-motivated,People need constant watching,People are lazy,B,,28
+74,People,A Power/Interest Grid helps:,Calculate power,Determine stakeholder engagement strategy,Find critical path,Manage budget,B,,28
+60,People,Maslow’s Hierarchy ends with:,Food,Self-actualization,Safety,Social needs,B,,29
+67,People,A Daily Stand-up should last:,15 minutes,1 hour,5 minutes,As long as needed,A,,29
+96,Process,Quality Assurance focuses on:,Product,Process,Budget,Customer,B,,29
+167,Business,PM must ensure compliance with:,Legal and organizational standards,PM rules only,Customer whims,No rules,A,,31
+51,People,Empowering the team increases:,The PM s workload,Team ownership and motivation,The chance of failure,The budget,B,,30
+66,People,A Sprint Retrospective is for:,Showing the product,Improving process,Planning next sprint,Firing people,B,,30
+42,People,A 360-degree feedback involves:,Only the PM s opinion,Feedback from peers  subordinates  and managers,A 360-minute meeting,Looking around the room,B,,31
+40,People,What is a T-Shaped professional?,Someone who only knows one thing,Someone with deep expertise in one area and broad knowledge in others,Someone who works in a T-shaped building,A manager,B,,32
+88,Process,Change Requests are approved by:,PM only,CCB or defined authority,Team,Customer only,B,,32
+171,Business,Project not aligned with strategy:,Keep working,Discuss with Sponsor to redirect/close,Change strategy,Hide it,B,,34
+39,People,A team is Co-located. This means:,They work in different cities,They work in the same physical space,They use the same software,They have the same manager,B,,33
+77,Process,Defining a new project is part of:,Initiating,Planning,Executing,Closing,A,,34
+41,People,What is the best outcome of conflict?,Someone loses,Innovative solutions and better team cohesion,People quit,The project is delayed,B,,37
+43,People,A Product Owner is responsible for:,Managing the team s schedule,Maximizing product value and managing the backlog,Coding the product,Hiring the PM,B,,35
+73,People,A Resource Management Plan includes:,Names only,How resources are acquired and managed,Laptop prices,Schedule,B,,36
+95,Process,Quantitative Risk Analysis involves:,Numerical simulation (e.g.  Monte Carlo),Categorizing,Listing,Talking,A,,36
+71,People,Nodding during Active Listening shows:,Agreement,Listening and understanding,Tiredness,Desire to speak,B,,38
+21,People,A team is diverse. What should the PM do?,Treat everyone exactly the same  ignoring culture,Promote cultural awareness and respect differences,Only hire people from one culture,Force everyone to adopt the PM s culture,B,,41
+49,People,What is a major risk in a Virtual Team ?,Too much communication,Misunderstandings due to lack of non-verbal cues,No travel costs,People working too hard,B,,40
+72,People,For a Burned out member the PM should:,Give more work,Encourage time off and re-evaluate load,Tell them to be stronger,Ignore it,B,,38
+76,People,The Project Manager is responsible for:,Doing all work,Project success and leadership,Making coffee,Approving Sponsor s vacation,B,,39
+63,People,Conflict in agile teams is often resolved:,By the PM,By the team during retrospectives,By the CEO,By coin flip,B,,42
+65,People,When Negotiating with a vendor focus on:,Lying about budget,Interests  not positions,Being aggressive,First offer,B,,40
+94,Process,Qualitative Risk Analysis prioritizes by:,Dollars,Probability and impact,PM s mood,Schedule,B,,41
+50,People,A Project Charter is important because it:,Lists every task,Formally authorizes the project,Contains the final budget,Is written by the team,B,,42
+52,People,A team member is an Expert. The PM should:,Tell them exactly what to do,Involve them in decision-making,Ignore them,Feel threatened,B,,42
+53,People,A stakeholder is Resistant. The PM should:,Avoid them,Try to understand and address their concerns,Fire them,Force them,B,,42
+62,People,When Onboarding a new member a PM should:,Introduce them to the vision and their role,Give them work and leave,Tell them to figure it out,Ignore them,A,,41
+31,People,An agile team is Self-Organizing. This means:,They have no manager,They decide how to do their work as a team,They do whatever they want,They don t have to follow a budget,B,,45
+61,People,Using Influence over Authority is common in:,Military,Matrix organizations,Projectized organizations,Dictatorships,B,,44
+64,People,A Stakeholder Engagement Assessment Matrix shows:,Current vs. desired engagement,Salaries,Phone numbers,Risks,A,,49
+68,People,The Three Questions of a Daily Stand-up focus on:,Cost and talk,Yesterday  today  and blockers,Time and budget,Philosophy,B,,49
+32,People,A team member makes a mistake. What should the PM do?,Fire them,Use it as a learning opportunity,Blame them in the report,Hide the mistake,B,,53
+33,People,A PM is identifying stakeholders. Who is a stakeholder?,Only the customer,Only the team,Anyone affected by the project,Only the PMO,C,,55
+7,People,A team is in the Storming phase. What is the PM s role?,Delegate all decisions,Provide high direction and support to resolve conflicts,Step back and let them fail,Dictate all tasks strictly,B,,55
+19,People,Which conflict resolution technique leads to a Win-Win ?,Collaborating/Problem Solving,Compromising,Forcing,Smoothing,A,,56
+25,People,A team member is Over-allocated. What should the PM do?,Make them work 80 hours a week,Use resource leveling or prioritize tasks,Hire a new team,Tell them to work faster,B,,55
+30,People,A PM is building Shared Understanding. What helps most?,Lengthy documents,Face-to-face communication and active listening,Strictly following the WBS,Only talking to the team leader,B,,55
+10,People,A PM wants to empower the team. What is the best approach?,Assign every task personally,Define the  what  and let the team decide the  how ,Make all decisions in private,Ask for approval on every email,B,,58
+15,People,A PM is mentoring a junior PM. What is the best way to help?,Give them all the data entry work,Provide feedback  guidance  and responsibility,Let them fail without help,Tell them to read the PMBOK Guide only,B,,60
+20,People,A PM uses Servant Leadership. What is their primary focus?,Controlling the team,Supporting and enabling the team to succeed,Pleasing the Sponsor,Following the rules,B,,58
+27,People,A project is being closed. What should the PM do for the team?,Celebrate successes and conduct  Lessons Learned ,Stop talking to them,Give them a bad review,Start the next project immediately,A,,62
+36,People,A PM wants to improve team Velocity. What should they focus on?,Working more hours,Removing impediments,Hiring more people,Cutting scope,B,,63
+23,People,A PM wants to foster transparency in Agile. What is the best tool?,Private emails,A public Kanban board,Locked spreadsheets,Monthly status reports,B,,66
+26,People,A PM is leading a team of experts. Which leadership style is best?,Autocratic,Participative/Laissez-faire,Micro-managing,Directing,B,,66
+29,People,A manager takes a resource for an emergency. What should the PM do?,Negotiate with the manager for a replacement,File a lawsuit,Refuse to let the resource go,Stop the project,A,,67
+22,People,A team member does not follow ground rules. What should the PM do?,Change the rules,Remind the member of the agreed-upon rules,Publicly shame them,Ignore it,B,,66
+28,People,A team is struggling with a technical hurdle. What should the PM do?,Solve it themselves,Bring in a subject matter expert (SME) to coach,Tell the team to figure it out,Cancel the project,B,,68
+8,People,The stakeholder is unhappy with progress. What should the PM do first?,Show them the project schedule,Meet with them to understand their concerns,Ignore the stakeholder,Ask the Sponsor to talk to them,B,,70
+24,People,A stakeholder is worried about a specific risk. What should the PM do?,Involve the stakeholder in the risk analysis,Tell them not to worry,Hide the risk,Blame someone else,A,,70
+35,People,A project is failing. The PM gathers the team to find out why. This is:,Blaming,Root Cause Analysis,Waste of time,Micromanagement,B,,71
+37,People,A team member feels their ideas are never heard. What should the PM do?,Tell them their ideas aren t good,Ensure they have a platform (e.g.  Retrospective),Ignore them,Promote them,B,,71
+17,People,A virtual team member is not responding to emails. What should the PM do?,Assume they are lazy,Try a different communication medium (e.g.  video call),Report them to their manager,Remove them from the team,B,,73
+18,People,A PM wants to ensure the team understands the vision. What should they use?,A 100-page report,A clear and concise project vision statement,A list of tasks,A budget spreadsheet,B,,75
+16,People,A team member is recognized for excellent work. How should the PM reward them?,Give them more work,Use a reward system meaningful to the individual,Give everyone the same reward,Do nothing,B,,78
+13,People,A stakeholder wants to give orders directly to the team. What should the PM do?,Quit the project,Tell the team to listen to the stakeholder,Explain the communication protocol to the stakeholder,Charge the stakeholder for the extra work,C,,79
+14,People,A PM holds a brainstorming session for complex problems. This is an example of:,Directing,Facilitating,Managing,Dictating,B,,79
+11,People,A team member is underperforming due to a personal issue. What should the PM do?,Show empathy and discuss how to support them,File a formal HR complaint,Replace them immediately,Deduct their pay,A,,80
+6,People,During a meeting a team member is constantly interrupted. What should the PM do?,End the meeting,Tell the members to speak louder,Intervene and ensure all voices are heard,Do nothing to avoid conflict,C,,80
+2,People,Two senior stakeholders have conflicting requirements. What is the PM’s first step?,Choose the requirement from the more senior stakeholder,Escalate to the Sponsor,Facilitate a meeting between them to reach a consensus,Submit both to the Change Control Board (CCB),C,,83
+12,People,A PM is using Emotional Intelligence (EI) to manage conflict. What is the first step?,Self-awareness,Social skills,Empathy,Motivation,A,,85
+1,People,A team member is consistently late to the daily stand-up. What should the Scrum Master do?,Reprimand them in front of the team,Meet with them privately to discuss the impact on the team,Ignore it as long as their work is done,Ask the Product Owner to replace them,B,,90
+4,People,A PM is leading a global virtual team. Team members feel disconnected. What should the PM do?,Require everyone to travel to headquarters,Set up periodic informal virtual  coffee breaks  to build rapport,Send more frequent status emails,Increase the number of mandatory project meetings,B,,93
+3,People,An agile team feels the Product Owner is micromanaging tasks. What should the Scrum Master do?,Tell the team to ignore the Product Owner,Coach the Product Owner on agile roles and servant leadership,Ask the team to follow all instructions,Take over the Product Owner s responsibilities,B,,94
+5,People,A team member wants to learn a new skill not required now but useful later. What should the PM do?,Deny the request to save costs,Support the request as it builds team capability and motivation,Tell them to learn it on their own time,Replace them with someone who already has the skill,B,,98
+9,People,An agile team is distracted by emergency requests from a functional manager. What should the Scrum Master do?,Tell the team to work overtime,Meet with the functional manager to protect the team from interruptions,Add requests to the current sprint,Tell the team to ignore the manager,B,,109

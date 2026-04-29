@@ -8,6 +8,9 @@ def get_db():
     if not firebase_admin._apps:
         try:
             cred_dict = dict(st.secrets["firebase"])
+            # Streamlit secrets may contain escaped newlines for private keys.
+            if "private_key" in cred_dict and isinstance(cred_dict["private_key"], str):
+                cred_dict["private_key"] = cred_dict["private_key"].replace("\\n", "\n")
             cred = credentials.Certificate(cred_dict)
             firebase_admin.initialize_app(cred)
         except Exception as e:
