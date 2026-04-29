@@ -119,8 +119,21 @@ def handle_login():
                 st.caption(f"Auth error details: {e}")
         return None
 
-    user = get_or_create_user(user_info["email"], user_info["id"])
-    user["name"] = user_info.get("name") or user["email"].split("@")[0]
+    try:
+        user = get_or_create_user(user_info["email"], user_info["id"])
+    except Exception as e:
+        st.error("Sign-in succeeded, but user profile initialization failed.")
+        st.caption(f"Initialization error details: {e}")
+        return None
+
+    if not user:
+        st.error(
+            "Sign-in succeeded, but database connection could not be initialized. "
+            "Please verify Firebase secrets in Streamlit Cloud and try again."
+        )
+        return None
+
+    user["name"] = user_info.get("name") or user.get("email", user_info["email"]).split("@")[0]
     user["picture"] = user_info.get("picture")
 
     if not user.get("is_enabled", False):
