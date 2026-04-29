@@ -155,6 +155,27 @@ def _render_auth_debug_panel():
                 st.code(f"{type(e).__name__}: {e}")
                 st.code(traceback.format_exc())
 
+def _validate_auth_secrets_shape():
+    """Return a human-readable validation message for auth secrets."""
+    auth = st.secrets.get("auth", {})
+    has_flat = bool(auth.get("client_id")) and bool(auth.get("client_secret"))
+    google = auth.get("google", {})
+    has_nested = bool(google.get("client_id")) and bool(google.get("client_secret"))
+    has_common = bool(auth.get("redirect_uri")) and bool(auth.get("cookie_secret"))
+
+    if not has_common:
+        return (
+            "Missing required [auth] keys: redirect_uri and/or cookie_secret."
+        )
+    if has_flat:
+        return "Using flat [auth] provider keys (client_id/client_secret)."
+    if has_nested:
+        return "Using nested [auth.google] provider keys."
+    return (
+        "Missing provider credentials. Add either [auth].client_id/client_secret "
+        "or [auth.google].client_id/client_secret."
+    )
+
 def _normalize_user_payload(user: dict, email: str, uid: str) -> dict:
     """Backfill required fields for older/incomplete user records."""
     is_admin = email.lower() == ADMIN_EMAIL.lower()
@@ -211,7 +232,10 @@ def handle_login():
                 st.error(
                     "Google login failed. Verify Streamlit Cloud authentication is enabled and app secrets are correct."
                 )
+                st.warning(_validate_auth_secrets_shape())
+                st.code(f"{type(e).__name__}: {e}")
                 st.caption(f"Auth error details: {e}")
+                st.code(traceback.format_exc())
         return None
 
     try:
