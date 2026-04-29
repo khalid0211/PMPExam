@@ -1,0 +1,219 @@
+import streamlit as st
+import pandas as pd
+from services.user_service import UserService
+from services.question_service import QuestionService
+from services.exam_service import ExamService
+from services.settings_service import SettingsService
+from config import SessionKeys, LOCAL_TEST_MODE
+
+def render_admin_panel():
+    st.title("Admin Panel")
+    
+    user_service = UserService()
+    question_service = QuestionService()
+    exam_service = ExamService()
+    settings_service = SettingsService()
+    
+    tab1, tab2, tab3, tab4 = st.tabs(["User Management", "Question Bank", "Exam Settings", "All Results"])
+    
+    with tab1:
+        st.header("Student Management")
+        students = user_service.get_all_students()
+        pending_students = [s for s in students if not s.get("is_enabled", False)]
+
+        st.subheader("Pending Approvals")
+        if not pending_students:
+            st.caption("No pending student approvals.")
+        else:
+            for pending in pending_students:
+                c1, c2 = st.columns([4, 1])
+                with c1:
+                    st.write(f"{pending.get('email', 'unknown')} ({pending.get('uid', '')})")
+                with c2:
+                    if st.button("Enable", key=f"enable_{pending.get('uid', '')}"):
+                        user_service.toggle_user_access(pending.get("uid"), True)
+                        st.success(f"Enabled {pending.get('email', 'student')}.")
+                        st.rerun()
+
+        st.divider()
+        
+        if not students:
+            st.info("No students registered yet.")
+        else:
+            df_students = pd.DataFrame(students)
+            # Display only relevant columns
+            display_cols = ["email", "is_enabled", "current_tries", "max_tries", "uid"]
+            st.dataframe(df_students[display_cols])
+            
+            st.divider()
+            st.subheader("Update User Access")
+            selected_email = st.selectbox("Select Student to Edit", df_students["email"].tolist())
+            user_to_edit = next(s for s in students if s["email"] == selected_email)
+            
+            col1, col2, col3 = st.columns(3)
+            with col1:
+                new_status = st.checkbox("Enabled", value=user_to_edit["is_enabled"])
+            with col2:
+                new_max = st.number_input("Max Tries", value=user_to_edit["max_tries"], min_value=1)
+            with col3:
+                reset_req = st.button("Reset Attempts Counter")
+                
+            if st.button("Save User Changes"):
+                user_service.toggle_user_access(user_to_edit["uid"], new_status)
+                user_service.update_max_tries(user_to_edit["uid"], int(new_max))
+                if reset_req:
+                    user_service.reset_attempts(user_to_edit["uid"])
+                st.success(f"Updated {selected_email}")
+                st.rerun()
+
+            st.divider()
+            st.subheader("Manage User Exams")
+            user_exams = exam_service.get_user_exams(user_to_edit["uid"])
+            if not user_exams:
+                st.info("No exams found for this user.")
+            else:
+                for exam in user_exams:
+                    col_a, col_b = st.columns([3, 1])
+                    with col_a:
+                        st.write(f"ID: {exam['exam_id'][:8]}... | Status: {exam['status']} | Date: {exam.get('start_time').strftime('%Y-%m-%d %H:%M')}")
+                    with col_b:
+                        if st.button("Delete Exam", key=f"del_{exam['exam_id']}"):
+                            exam_service.delete_exam(exam['exam_id'])
+                            user_service.decrement_tries(user_to_edit["uid"])
+                            st.success(f"Deleted exam {exam['exam_id'][:8]} and reset attempt.")
+                            st.rerun()
+
+    with tab2:
+        st.header("Question Bank Management")
+        
+        questions = question_service.get_all_questions()
+        st.metric("Total Questions", len(questions))
+        
+        st.divider()
+        st.subheader("Upload Questions")
+        uploaded_file = st.file_uploader("Upload PMP_180_Questions.csv", type="csv")
+        
+        if uploaded_file:
+            df = pd.read_csv(uploaded_file)
+            st.write("Preview:")
+            st.dataframe(df.head())
+            
+            col1, col2 = st.columns(2)
+            with col1:
+                replace_all = st.checkbox("Replace All Questions", value=False)
+            with col2:
+                if st.button("Upload to Firestore", type="primary"):
+                    if replace_all:
+                        with st.spinner("Clearing old questions..."):
+                            question_service.clear_all_questions()
+                    
+                    with st.spinner("Uploading..."):
+                        success, errors = question_service.upload_from_csv(df)
+                        st.success(f"Successfully uploaded {success} questions. Errors: {errors}")
+                        st.rerun()
+        
+        if st.button("Clear Question Bank", type="secondary"):
+            if st.warning("Are you sure you want to delete ALL questions?"):
+                question_service.clear_all_questions()
+                st.success("Question bank cleared.")
+                st.rerun()
+
+    with tab3:
+        st.header("Review Settings")
+        review_settings = settings_service.get_review_settings()
+        detailed_enabled = st.checkbox(
+            "Enable detailed student review (show per-question correct answers)",
+            value=review_settings.get("detailed_review_enabled", False)
+        )
+        if st.button("Save Review Settings", type="primary"):
+            settings_service.set_detailed_review_enabled(detailed_enabled)
+            st.success("Review settings updated.")
+
+    with tab4:
+        st.header("All Student Results")
+        all_exams = exam_service.get_all_exams()
+        students = user_service.get_all_students()
+        student_email_by_uid = {s.get("uid"): s.get("email", "unknown") for s in students}
+
+        if not all_exams:
+            st.info("No exam records found.")
+        else:
+            rows = []
+            for exam in all_exams:
+                total_questions = len(exam.get("question_order", []))
+                start_time = exam.get("start_time")
+                rows.append({
+                    "student_email": student_email_by_uid.get(exam.get("user_id"), exam.get("user_id", "unknown")),
+                    "exam_id": exam.get("exam_id", "")[:8],
+                    "status": exam.get("status", ""),
+                    "score": exam.get("total_score", 0),
+                    "total_questions": total_questions,
+                    "percent": round((exam.get("total_score", 0) / total_questions) * 100, 1) if total_questions else 0.0,
+                    "started_at": start_time.strftime("%Y-%m-%d %H:%M") if start_time else "",
+                })
+            st.dataframe(pd.DataFrame(rows), use_container_width=True)
+
+    # Test Mode Reset Section
+    if LOCAL_TEST_MODE:
+        st.divider()
+        st.header("⚠️ Test Mode Controls")
+        st.warning("You are in LOCAL TEST MODE. These actions are destructive!")
+
+        col1, col2, col3 = st.columns(3)
+
+        with col1:
+            if st.button("🗑️ Delete All Students", type="secondary"):
+                st.session_state["confirm_delete_students"] = True
+
+        with col2:
+            if st.button("🗑️ Delete All Exams", type="secondary"):
+                st.session_state["confirm_delete_exams"] = True
+
+        with col3:
+            if st.button("🗑️ Reset Everything", type="secondary"):
+                st.session_state["confirm_reset_all"] = True
+
+        # Confirmation dialogs
+        if st.session_state.get("confirm_delete_students"):
+            st.error("Are you sure you want to delete ALL student accounts?")
+            c1, c2 = st.columns(2)
+            with c1:
+                if st.button("Yes, Delete All Students", type="primary"):
+                    count = user_service.delete_all_students()
+                    st.success(f"Deleted {count} student accounts.")
+                    st.session_state["confirm_delete_students"] = False
+                    st.rerun()
+            with c2:
+                if st.button("Cancel", key="cancel_students"):
+                    st.session_state["confirm_delete_students"] = False
+                    st.rerun()
+
+        if st.session_state.get("confirm_delete_exams"):
+            st.error("Are you sure you want to delete ALL exams?")
+            c1, c2 = st.columns(2)
+            with c1:
+                if st.button("Yes, Delete All Exams", type="primary"):
+                    count = exam_service.delete_all_exams()
+                    st.success(f"Deleted {count} exams.")
+                    st.session_state["confirm_delete_exams"] = False
+                    st.rerun()
+            with c2:
+                if st.button("Cancel", key="cancel_exams"):
+                    st.session_state["confirm_delete_exams"] = False
+                    st.rerun()
+
+        if st.session_state.get("confirm_reset_all"):
+            st.error("⚠️ This will delete ALL students, ALL exams, and ALL questions!")
+            c1, c2 = st.columns(2)
+            with c1:
+                if st.button("Yes, Reset Everything", type="primary"):
+                    students_deleted = user_service.delete_all_students()
+                    exams_deleted = exam_service.delete_all_exams()
+                    question_service.clear_all_questions()
+                    st.success(f"Reset complete: {students_deleted} students, {exams_deleted} exams, all questions deleted.")
+                    st.session_state["confirm_reset_all"] = False
+                    st.rerun()
+            with c2:
+                if st.button("Cancel", key="cancel_all"):
+                    st.session_state["confirm_reset_all"] = False
+                    st.rerun()

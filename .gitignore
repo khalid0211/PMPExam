@@ -1,0 +1,3 @@
+# Streamlit
+.streamlit/secrets.toml
+.streamlit/client_secret.json

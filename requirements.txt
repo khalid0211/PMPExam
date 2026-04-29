@@ -1,0 +1,8 @@
+streamlit>=1.45.0
+firebase-admin>=7.0.0
+google-cloud-firestore>=2.21.0
+pandas>=2.3.0
+numpy>=2.2.0
+pillow>=11.2.0
+streamlit-autorefresh>=1.0.1
+streamlit-google-auth>=1.0.0
