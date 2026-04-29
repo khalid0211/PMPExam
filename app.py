@@ -37,12 +37,14 @@ def main():
 
     # Sidebar Navigation
     with st.sidebar:
-        display_name = user.get("name") or user["email"].split("@")[0]
+        email = user.get("email", "")
+        display_name = user.get("name") or (email.split("@")[0] if email else "User")
         display_role = user.get("role", UserRole.STUDENT).capitalize()
         if user.get("picture"):
             st.image(user["picture"], width=88)
         st.title(display_name)
-        st.caption(user["email"])
+        if email:
+            st.caption(email)
         st.write(f"Role: {display_role}")
         
         if st.button("Logout", key="logout_btn"):
@@ -52,7 +54,7 @@ def main():
         st.divider()
         
         # Navigation logic
-        if user['role'] == UserRole.ADMIN:
+        if user.get("role", UserRole.STUDENT) == UserRole.ADMIN:
             page = st.radio("Navigation", ["Admin Panel", "Student Dashboard"], key="main_nav")
         else:
             st.subheader("Student Dashboard")

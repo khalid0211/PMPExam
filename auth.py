@@ -116,6 +116,18 @@ def _trigger_streamlit_login():
         # Older experimental auth variant expects provider id.
         login_fn("google")
 
+def _normalize_user_payload(user: dict, email: str, uid: str) -> dict:
+    """Backfill required fields for older/incomplete user records."""
+    is_admin = email.lower() == ADMIN_EMAIL.lower()
+    normalized = dict(user or {})
+    normalized["uid"] = normalized.get("uid") or uid
+    normalized["email"] = normalized.get("email") or email
+    normalized["is_enabled"] = normalized.get("is_enabled", is_admin)
+    normalized["max_tries"] = normalized.get("max_tries", 3)
+    normalized["current_tries"] = normalized.get("current_tries", 0)
+    normalized["role"] = normalized.get("role") or (UserRole.ADMIN if is_admin else UserRole.STUDENT)
+    return normalized
+
 
 def handle_login():
     """Handle Google OAuth login flow with local development support."""
@@ -194,19 +206,18 @@ def get_or_create_user(email: str, uid: str) -> dict:
     user_doc = user_ref.get()
 
     if user_doc.exists:
-        return user_doc.to_dict()
+        existing_user = user_doc.to_dict() or {}
+        normalized = _normalize_user_payload(existing_user, email, uid)
+        # Persist backfilled fields so future logins are stable.
+        if normalized != existing_user:
+            user_ref.set(normalized, merge=True)
+        return normalized
 
     # Create new user
-    is_admin = email.lower() == ADMIN_EMAIL.lower()
-    new_user = {
-        "uid": uid,
-        "email": email,
-        # New students require admin approval before they can access exams.
-        "is_enabled": is_admin,
-        "max_tries": 3,
-        "current_tries": 0,
-        "role": UserRole.ADMIN if is_admin else UserRole.STUDENT
-    }
+    new_user = _normalize_user_payload({}, email, uid)
+    # New students require admin approval before they can access exams.
+    if new_user["role"] == UserRole.STUDENT:
+        new_user["is_enabled"] = False
     user_ref.set(new_user)
     return new_user
 
