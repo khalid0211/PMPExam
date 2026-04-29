@@ -110,25 +110,13 @@ def _trigger_streamlit_login():
     login_fn = getattr(st, "login", None)
     if login_fn is None:
         raise RuntimeError("Streamlit login API is unavailable in this runtime.")
-    auth_cfg = st.secrets.get("auth", {})
-    has_google_provider = bool(auth_cfg.get("google", {}).get("client_id"))
-    try:
-        # If [auth.google] is configured, explicitly target that provider.
-        if has_google_provider:
-            login_fn("google")
-        else:
-            # Flat/default provider configuration.
-            login_fn()
-    except TypeError:
-        # Backward compatibility across Streamlit auth API signatures.
-        if has_google_provider:
-            login_fn()
-        else:
-            login_fn("google")
+    # Use simple login() call - works with flat [auth] config (single provider)
+    login_fn()
 
 def _render_auth_debug_panel():
     """Render inline Streamlit auth diagnostics on the login screen."""
     user_obj = getattr(st, "user", None)
+    auth_cfg = st.secrets.get("auth", {})
     st.write(
         {
             "streamlit_version": getattr(st, "__version__", "unknown"),
@@ -136,7 +124,10 @@ def _render_auth_debug_panel():
             "has_logout": callable(getattr(st, "logout", None)),
             "has_user_api": user_obj is not None,
             "auth_secrets_present": "auth" in st.secrets,
-            "auth_secret_keys": list(st.secrets.get("auth", {}).keys()) if "auth" in st.secrets else [],
+            "has_client_id": bool(auth_cfg.get("client_id")),
+            "has_client_secret": bool(auth_cfg.get("client_secret")),
+            "has_redirect_uri": bool(auth_cfg.get("redirect_uri")),
+            "has_cookie_secret": bool(auth_cfg.get("cookie_secret")),
             "user_is_logged_in": bool(_read_user_field(user_obj, "is_logged_in", False)) if user_obj else False,
             "user_email": _read_user_field(user_obj, "email") if user_obj else None,
         }
@@ -167,23 +158,17 @@ def _render_auth_debug_panel():
 def _validate_auth_secrets_shape():
     """Return a human-readable validation message for auth secrets."""
     auth = st.secrets.get("auth", {})
-    has_flat = bool(auth.get("client_id")) and bool(auth.get("client_secret"))
-    google = auth.get("google", {})
-    has_nested = bool(google.get("client_id")) and bool(google.get("client_secret"))
+    has_credentials = bool(auth.get("client_id")) and bool(auth.get("client_secret"))
     has_common = bool(auth.get("redirect_uri")) and bool(auth.get("cookie_secret"))
+    has_metadata = bool(auth.get("server_metadata_url"))
 
     if not has_common:
-        return (
-            "Missing required [auth] keys: redirect_uri and/or cookie_secret."
-        )
-    if has_flat:
-        return "Using flat [auth] provider keys (client_id/client_secret)."
-    if has_nested:
-        return "Using nested [auth.google] provider keys."
-    return (
-        "Missing provider credentials. Add either [auth].client_id/client_secret "
-        "or [auth.google].client_id/client_secret."
-    )
+        return "Missing required [auth] keys: redirect_uri and/or cookie_secret."
+    if not has_credentials:
+        return "Missing [auth] credentials: client_id and/or client_secret."
+    if not has_metadata:
+        return "Missing [auth] server_metadata_url."
+    return "Auth secrets configured correctly (flat format)."
 
 def _normalize_user_payload(user: dict, email: str, uid: str) -> dict:
     """Backfill required fields for older/incomplete user records."""

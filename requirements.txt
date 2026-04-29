@@ -5,4 +5,3 @@ pandas>=2.3.0
 numpy>=2.2.0
 pillow>=11.2.0
 streamlit-autorefresh>=1.0.1
-Authlib>=1.6.0
