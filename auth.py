@@ -1,4 +1,5 @@
 import streamlit as st
+import traceback
 from firebase_config import get_db
 from config import ADMIN_EMAIL, SessionKeys, UserRole
 
@@ -116,6 +117,44 @@ def _trigger_streamlit_login():
         # Older experimental auth variant expects provider id.
         login_fn("google")
 
+def _render_auth_debug_panel():
+    """Render inline Streamlit auth diagnostics on the login screen."""
+    user_obj = getattr(st, "user", None)
+    st.write(
+        {
+            "streamlit_version": getattr(st, "__version__", "unknown"),
+            "has_login": callable(getattr(st, "login", None)),
+            "has_logout": callable(getattr(st, "logout", None)),
+            "has_user_api": user_obj is not None,
+            "auth_secrets_present": "auth" in st.secrets,
+            "auth_secret_keys": list(st.secrets.get("auth", {}).keys()) if "auth" in st.secrets else [],
+            "user_is_logged_in": bool(_read_user_field(user_obj, "is_logged_in", False)) if user_obj else False,
+            "user_email": _read_user_field(user_obj, "email") if user_obj else None,
+        }
+    )
+
+    c1, c2 = st.columns(2)
+    with c1:
+        if st.button("Debug: Trigger st.login()", key="debug_login_btn"):
+            try:
+                _trigger_streamlit_login()
+            except Exception as e:
+                st.error("Debug login failed.")
+                st.code(f"{type(e).__name__}: {e}")
+                st.code(traceback.format_exc())
+    with c2:
+        if st.button("Debug: Trigger st.logout()", key="debug_logout_btn"):
+            try:
+                logout_fn = getattr(st, "logout", None)
+                if logout_fn is None:
+                    st.error("st.logout() is unavailable in this runtime.")
+                else:
+                    logout_fn()
+            except Exception as e:
+                st.error("Debug logout failed.")
+                st.code(f"{type(e).__name__}: {e}")
+                st.code(traceback.format_exc())
+
 def _normalize_user_payload(user: dict, email: str, uid: str) -> dict:
     """Backfill required fields for older/incomplete user records."""
     is_admin = email.lower() == ADMIN_EMAIL.lower()
@@ -156,6 +195,11 @@ def handle_login():
         st.title("PMP Exam Simulator")
         st.image("PMPExamBanner.jpg", use_column_width=True)
         st.write("Please sign in to continue.")
+        if st.button("Open Auth Debug Panel", key="open_auth_debug_btn"):
+            st.session_state["show_auth_debug"] = not st.session_state.get("show_auth_debug", False)
+        if st.session_state.get("show_auth_debug", False):
+            with st.expander("Auth Debug Panel", expanded=True):
+                _render_auth_debug_panel()
         with st.expander("Troubleshoot Firebase / Login", expanded=False):
             st.caption("Use this if Google sign-in returns an internal server error.")
             if st.button("Run Firebase Health Check", key="firebase_health_btn"):
