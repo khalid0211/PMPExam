@@ -161,7 +161,7 @@ def handle_login():
             "name": ADMIN_EMAIL.split("@")[0],
             "picture": None,
         }
-        user = get_or_create_user(mock_user["email"], mock_user["id"])
+        user, _ = get_or_create_user(mock_user["email"], mock_user["id"])
         user["name"] = mock_user["name"]
         user["picture"] = mock_user["picture"]
         st.session_state[SessionKeys.USER] = user
@@ -184,7 +184,7 @@ def handle_login():
             return None
 
         try:
-            user = get_or_create_user(email, uid)
+            user, is_new_user = get_or_create_user(email, uid)
         except Exception as e:
             st.error(f"Sign-in succeeded, but user profile initialization failed: {e}")
             return None
@@ -197,7 +197,12 @@ def handle_login():
         user["picture"] = picture
 
         if not user.get("is_enabled", False):
-            st.error("Your account is disabled. Contact administrator.")
+            st.title("PMP Exam Simulator")
+            st.image("PMPExamBanner.jpg", width=800)
+            if is_new_user:
+                st.info("Your account has been created, please wait for the administrator to enable your access to the Exam Simulator.")
+            else:
+                st.error("Your account is disabled. Contact administrator.")
             if st.button("Logout"):
                 logout()
             return None
@@ -220,11 +225,15 @@ def handle_login():
     return None
 
 
-def get_or_create_user(email: str, uid: str) -> dict:
-    """Get existing user or create new one in Firestore."""
+def get_or_create_user(email: str, uid: str) -> tuple[dict, bool]:
+    """Get existing user or create new one in Firestore.
+
+    Returns:
+        tuple: (user_dict, was_just_created)
+    """
     db = get_db()
     if not db:
-        return {}
+        return {}, False
 
     user_ref = db.collection("users").document(uid)
     user_doc = user_ref.get()
@@ -234,14 +243,14 @@ def get_or_create_user(email: str, uid: str) -> dict:
         normalized = _normalize_user_payload(existing_user, email, uid)
         if normalized != existing_user:
             user_ref.set(normalized, merge=True)
-        return normalized
+        return normalized, False
 
     # Create new user
     new_user = _normalize_user_payload({}, email, uid)
     if new_user["role"] == UserRole.STUDENT:
         new_user["is_enabled"] = False
     user_ref.set(new_user)
-    return new_user
+    return new_user, True
 
 
 def logout():
