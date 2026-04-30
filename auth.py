@@ -202,7 +202,7 @@ def handle_login():
             if is_new_user:
                 st.info("Your account has been created, please wait for the administrator to enable your access to the Exam Simulator.")
             else:
-                st.error("Your account is disabled. Contact administrator.")
+                st.info("Please wait for the administrator to enable your access to the Exam Simulator.")
             if st.button("Logout"):
                 logout()
             return None
