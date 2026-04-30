@@ -39,7 +39,7 @@ def _get_authorization_url() -> str:
         "response_type": "code",
         "scope": OAUTH_SCOPE,
         "access_type": "offline",
-        "prompt": "consent",
+        "prompt": "select_account",
     }
     return f"{GOOGLE_AUTH_ENDPOINT}?{urlencode(params)}"
 
